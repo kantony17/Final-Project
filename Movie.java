@@ -9,9 +9,10 @@ This class creates a Movie node that holds the following information:
 - ID code (id)
 - Whether or not the movie is in the library
 - Pointer called next to link movies together
+- Right, Left, and Root pointers to use move Node in a BST
 */
 
-public class Movie{
+public class Movie implements java.io.Serializable{
 
 	//instance variables
 	private String title;
@@ -19,16 +20,22 @@ public class Movie{
 	private int id;
 	private int tomatoScore;
 	private boolean haveMovie;
-	private Movie next;
+	private Movie nextM;
+	private Movie rightM;
+	private Movie leftM;
+	private Movie rootM;
 
 	//incoming variables can't have the same names as instance variables
-	public Movie(String title0, int releaseDate0, int id0, int tomatoScore0, boolean haveMovie0, Movie next0){
+	public Movie(String title0, int releaseDate0, int id0, int tomatoScore0, boolean haveMovie0, Movie nextM0, Movie rightM0, Movie leftM0, Movie rootM0){
 		title = title0;
 		releaseDate = releaseDate0;
 		id = id0;
 		tomatoScore = tomatoScore0;
 		haveMovie = haveMovie0;
-		next = next0;
+		nextM = nextM0;
+		rightM = rightM0;
+		leftM = leftM0;
+		rootM = rootM0;
 	}
 
 	//assume movie is in the library unless otherwise specified, set pointer to null
@@ -38,7 +45,10 @@ public class Movie{
 		this.id = id;
 		this.tomatoScore = tomatoScore;
 		haveMovie = true;
-		next = null;
+		nextM = null;
+		rightM = null;
+		leftM = null;
+		rootM = null;
 	}
 
 	//returns the movie's title
@@ -91,14 +101,44 @@ public class Movie{
 		haveMovie = haveMovie0;
 	}
 
-	//returns the movie's pointer
-	public Movie getNext(){
-		return next;
+	//returns the movie's next pointer
+	public Movie getNextM(){
+		return nextM;
 	}
 	
-	//sets the movie's pointer
-	public void setNext(Movie nextItem){
-		next = nextItem;
+	//sets the movie's next pointer
+	public void setNextM(Movie nextMItem){
+		nextM = nextMItem;
+	}
+
+	//returns the movie's right pointer
+	public Movie getRightM(){
+		return rightM;
+	}
+	
+	//sets the movie's right pointer
+	public void setRightM(Movie rightMItem){
+		rightM = rightMItem;
+	}
+
+	//returns the movie's left pointer
+	public Movie getLeftM(){
+		return leftM;
+	}
+	
+	//sets the movie's left pointer
+	public void setLeftM(Movie leftMItem){
+		leftM = leftMItem;
+	}
+
+	//returns the movie's root pointer
+	public Movie getRootM(){
+		return rootM;
+	}
+	
+	//sets the movie's root pointer
+	public void setRootM(Movie rootMItem){
+		rootM = rootMItem;
 	}
 
 }
