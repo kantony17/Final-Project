@@ -3,8 +3,8 @@ public class TestMovie {
     	System.out.println();
     	System.out.println("This is code that will test the Movie Node.");
 		System.out.println();
-		Movie aMovie = new Movie("Captain America: Civil War", 20160506, 1, 97);
-		Movie bMovie = new Movie("Deadpool", 20160212, 2, 83);
+		Movie aMovie = new Movie("Captain America: Civil War", 20160506, 10001, 97);
+		Movie bMovie = new Movie("Deadpool", 20160212, 10002, 83);
 		System.out.println("The first movie is " + aMovie.getTitle());
 		System.out.println("It was released: " + aMovie.getRelease());
 		System.out.println("Its movie ID is " + aMovie.getID());
