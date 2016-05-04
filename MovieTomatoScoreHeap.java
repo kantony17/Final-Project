@@ -77,13 +77,15 @@ public class MovieTomatoScoreHeap implements java.io.Serializable{
 			if ((pq[x].getTomatoScore() < pq[2*i+1].getTomatoScore()) && (pq[x].getTomatoScore() < pq[2*i+2].getTomatoScore())){
 				break;
 			}
+			//Note: the following two cases will take care of the left and right child having the same tomato score	
+
 			//if current movie has a higher tomato score than left child and left child is small then right child, swap the two
-			else if ((pq[x].getTomatoScore() > pq[2*i+1].getTomatoScore()) && (pq[2*i+1].getTomatoScore() < pq[2*i+2].getTomatoScore())){
+			else if ((pq[x].getTomatoScore() > pq[2*i+1].getTomatoScore()) && (pq[2*i+1].getTomatoScore() <= pq[2*i+2].getTomatoScore())){
 				swap(x,2*i+1);
 				x = 2*i+1;
 			}
 			//if currentmovie has a higher tomato score than right child and right child is smaller than left child, swap the two
-			else if ((pq[x].getTomatoScore() > pq[2*i+2].getTomatoScore()) && (pq[2*i+1].getTomatoScore() > pq[2*i+2].getTomatoScore())){
+			else if ((pq[x].getTomatoScore() > pq[2*i+2].getTomatoScore()) && (pq[2*i+1].getTomatoScore() >= pq[2*i+2].getTomatoScore())){
 				swap(x,2*i+2);
 				x = 2*i+2;
 			}

@@ -9,7 +9,7 @@ public class TestMovieTomatoScoreHeap {
 		Movie cMovie = new Movie("Iron Man", 20080502, 10003, 94);
 		Movie dMovie = new Movie("X-Men: Apocalypse", 20160527, 10004, 99);
 		Movie eMovie = new Movie("Test 1", 20160214, 10005, 85);
-		Movie fMovie = new Movie("Test 2", 20160213, 10006, 88);
+		Movie fMovie = new Movie("Test 2", 20160213, 10006, 59);
 		Movie gMovie = new Movie("Test 3", 20160215, 10007, 89);
 		Movie hMovie = new Movie("Test 4", 20161010, 10008, 90);
 		Movie iMovie = new Movie("Test 5", 20001010, 10009, 49);
@@ -21,6 +21,15 @@ public class TestMovieTomatoScoreHeap {
 		a.insertMHeap(dMovie);
 		a.insertMHeap(eMovie);
 		a.insertMHeap(fMovie);
+		a.insertMHeap(gMovie);
+		a.insertMHeap(hMovie);
+		a.insertMHeap(iMovie);
+		a.insertMHeap(jMovie);
+		a.insertMHeap(kMovie);
+		System.out.println("The least rated movie is "+ a.findLeastRatedMovie().getTitle() + " with a score of " +a.findLeastRatedMovie().getTomatoScore());
+		a.printMHeap();
+		a.deleteLeastRatedMovie();
+		System.out.println();
 		System.out.println("The least rated movie is "+ a.findLeastRatedMovie().getTitle() + " with a score of " +a.findLeastRatedMovie().getTomatoScore());
 		a.printMHeap();
 		a.deleteLeastRatedMovie();
