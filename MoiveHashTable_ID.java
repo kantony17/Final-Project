@@ -28,7 +28,7 @@ public class MovieHashTable_ID implements java.io.Serializable{
 	}
 
 	public int hash1(int IDNum){
-		return (IDNum%maxMovie);
+		return (IDNum%maxMovies);
 	}
 
 	public int hash2(int value, int IDNum){
@@ -36,12 +36,12 @@ public class MovieHashTable_ID implements java.io.Serializable{
 
 	}
 	
-	public Moive lookUp(int IDNum){
+	public Movie lookUp(int IDNum){
 		int counter = 0;
-		int check = hash1(key);
+		int check = hash1(IDNum);
 
-		while ((movies[check] == null) || (movies[check].getKey() != key)){
-			check = hash2(check,key);
+		while ((movies[check] == null) || (movies[check].getID() != IDNum)){
+			check = hash2(check,IDNum);
 			counter++;
 			if (counter > maxMovies){
 				return null;
@@ -52,9 +52,9 @@ public class MovieHashTable_ID implements java.io.Serializable{
 
 	public void delete(int IDNum){
 		int counter = 0;
-		int check = hash1(key);
-		while ((movies[check] == null) || (movies[check].getKey() != key)){
-			check = hash2(check,key);
+		int check = hash1(IDNum);
+		while ((movies[check] == null) || (movies[check].getID() != IDNum)){
+			check = hash2(check,IDNum);
 		}
 
 		movies[check] = null;
@@ -65,18 +65,17 @@ public class MovieHashTable_ID implements java.io.Serializable{
 
 	public void insert(Movie inMovie){
 		int counter = 0;
-		int place = hash1(inMovie.getKey());
+		int place = hash1(inMovie.getID());
 		while ((counter < maxMovies) && (movies[place] != null)){
-			place = hash2(place,inMovie.getKey());
+			place = hash2(place,inMovie.getID());
 			counter++;	
 		}
 
 		if (isFull()){
-			System.out.println("Database is full; please make space in order to add " + inMovie.getName());
+			System.out.println("Database is full; please make space in order to add " + inMovie.getTitle());
 		}
 
 		else{
-			(counter < maxMovies)
 			movies[place] = inMovie;
 			numMovies++;
 		}
@@ -84,3 +83,4 @@ public class MovieHashTable_ID implements java.io.Serializable{
 	}
 
 }
+
