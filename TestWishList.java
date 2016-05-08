@@ -8,13 +8,21 @@ public class TestWishList {
 		Movie eMovie = new Movie("Iron Man", 20160920, 10005, 95);
 
 		w.addNewMovie(aMovie);
-/*		w.addNewMovie(bMovie);
+		w.addNewMovie(bMovie);
 		w.addNewMovie(cMovie);
-		w.addNewMovie(dMovie);
-		w.addNewMovie(eMovie);*/
+		//w.addNewMovie(dMovie);
+		//w.addNewMovie(eMovie);
 
+		//System.out.println("This is the movie you are searching for:");
+		//System.out.println(w.search(19));
+
+		System.out.println("The following movies are in your list:");
 		w.printList();
 
+		//w.delete(83); //delete a movie
+
+		//System.out.println("The following movies are in your list:");
+		//w.printList();
 	}
 	
 }
