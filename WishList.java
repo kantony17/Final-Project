@@ -1,90 +1,140 @@
-//Wish List for Customers
-
+//Main Menu
 
 import java.util.Scanner;
 
-public class WishList{
+public class MainMenu{
 
 	//instance variables
-	private int length;
-	private Movie head;
-	private Movie end;
-	private Movie temp;
-	private Movie temp2;
-	
-	//constructor
-	public WishList(){
-		length = 0;
-	}
+	private String passwordA = "netflixAdmin";
+	private String passwordC = "netflixCust";
+	WishList wishlist = new WishList();
+	MovieHashTable_ID movieHash = new MovieHashTable_ID();
+	MovieTomatoScoreHeap movieHeap = new MovieTomatoScoreHeap();
+	MovieReleaseDateBST movieBST = new MovieReleaseDateBST();
+	//RecentlyWatchedStack movieStack = new RecentlyWatchedStack();
 
-	//add new movie in any location, O(n) runtime
-	public void addNewMovie(Movie movie){
-		while (length < 20){
-			try{
-				Scanner s = new Scanner(System.in);
-				for (int length = 0; length < 20; length++) {
-					System.out.println("Where would you like this movie to be added? \n A. Front \n B. End \n C. Other");
-					String userInput = s.next();
-					if (userInput == "A"){
-						Movie temp = head.getNextM();
-						head = movie;
-						movie.setNextM(temp);
-					}
-					else if (userInput == "B"){
-						Movie temp = end;
-						end = movie;
-						temp.setNextM(movie);
-					}
-					else if (userInput == "C"){
-						Scanner x = new Scanner(System.in);
-						System.out.println("Enter a number 1-20 where you'd like this movie to be played:  ");
-						int userInput2 = x.nextInt();
-						Movie temp = head;
-						for (int i = 0; i < userInput2; i++){
-							temp = temp.getNextM();
+	//constructor 
+	public MainMenu(){
+		try{
+			Scanner f = new Scanner(System.in);
+			System.out.println("Please enter your username:  ");
+			String username = f.next();
+			if (username == "admin"){
+				try{
+					Scanner p = new Scanner(System.in);
+					System.out.println("Please input your admin password:  ");
+					String password = p.next();
+					if (password == passwordA){
+						try{
+							Scanner t = new Scanner(System.in);
+							System.out.println("1. Add a movie to the database. \n 2. View least-rated movie in the database. \n 3. View all movies in database(by order of release date). ");
+							int adminInput = t.nextInt();
+							if (adminInput == 1){
+								//movieHeap.centralAdd();
+							}
+							
+							else if (adminInput == 2){
+								Movie temp = movieHeap.findLeastRatedMovie();
+								try{
+									Scanner l = new Scanner(System.in);
+									System.out.println("Would you like to delete this movie from the database? Yes or No. ");
+									String answer = l.next();
+									if (answer == "Yes"){
+										//movieHeap.centralDelete();
+									}
+									else if (answer == "No"){
+										System.out.println("This movie will remain in the database.");
+									}
+								}
+								catch(IllegalArgumentException l){
+										System.out.println("You did not enter one of the choices. Choose Again");
+										l.printStackTrace();
+								}
+
+							}
+						
+							else if (adminInput == 3){
+								movieBST.printMovieTree();
+							}
 						}
-						Movie temp2 = temp;
-						temp.setNextM(movie);
-						movie.setNextM(temp2.getNextM());
+						catch(IllegalArgumentException z){
+							System.out.println("You did not enter one of the choices. Choose Again");
+							z.printStackTrace(); 
+						}
 					}
 				}
+				catch(IllegalArgumentException a){
+						System.out.println("You did not enter one of the choices. Choose Again");
+						a.printStackTrace();
+				}
 			}
-			catch(IllegalArgumentException i){
-				System.out.println("You did not enter one of the choices. Choose Again");
-				i.printStackTrace();
+			else if (username == "customer"){
+				try{
+					Scanner o = new Scanner(System.in);
+					System.out.println("Please input your customer password:  ");
+					String password = o.next();
+					if (password == passwordC){
+						try{
+							Scanner s = new Scanner(System.in);
+							System.out.println("What would you like to do today? \n 1. Play a Movie \n 2. See movies in your wish list \n 3. Add a new movie to your wish list \n 4. Delete a movie from your wishlist \n 5. View your recently watched movies ");
+							int userInput = s.nextInt();
+							if (userInput == 1){
+								wishlist.firstMovie();
+								try{
+									Scanner e = new Scanner(System.in);
+									System.out.println("Would you like to delete this movie from the wishlist after you've seen it? Yes or No");
+									String userInput5 = e.next();
+									if (userInput5 == "Yes"){
+										wishlist.delete(wishlist.firstMovie().getID());
+									}
+									else if (userInput5 == "No"){
+										System.out.println("This movie will remain in your wish list.");;
+									}
+								}
+								catch(IllegalArgumentException k){
+									System.out.println("You did not enter one of the choices. Choose Again");
+									k.printStackTrace();
+								}
+							}
+							else if (userInput == 2){
+								wishlist.printList();
+							}
+							else if (userInput == 3){
+								Scanner n = new Scanner(System.in);
+								System.out.println("Enter the ID of the movie you would like to add:   ");
+								int userInput2 = n.nextInt();
+								Movie movie = movieHash.lookUp(userInput2);
+								wishlist.addNewMovie(movie);
+							}
+							else if (userInput == 4){
+								Scanner d = new Scanner(System.in);
+								System.out.println("Enter the ID of the movie you would like to delete:    ");
+								int userInput3 = d.nextInt();
+								wishlist.delete(userInput3);
+							}
+							else if (userInput ==5){
+								//movieStack.printRecentlyWatchedStack();
+							}
+						}
+						catch(IllegalArgumentException j){
+							System.out.println("You did not enter one of the choices. Choose Again");
+							j.printStackTrace(); 
+						}
+					}
+				}
+				catch(IllegalArgumentException u){
+					System.out.println("You did not enter one of the choices. Choose Again");
+					u.printStackTrace(); 
+				}
 			}
 		}
-	}
-
-	//searches for a movie in the list, returns the movie, O(n) runtime 
-	//id is the five digit long number for each movie 
-	public Movie search(int id){
-		while (head.getNextM() != null && head.getNextM().getID() != id){
-			head = head.getNextM();
-		}
-		return head;//returning the node before the one we're searching for
-	}
-
-	//deletes the node in the list and reorganizes the list, O(n) runtime 
-	public void delete(int id){
-		temp = search(id);
-		temp.setNextM(temp.getNextM().getNextM());
-		temp.getNextM().setNextM(null); 
-	}
-
-	//returns the first movie in the list
-	public Movie firstMovie(){
-		return head;
-	}
-
-	//prints the title and id of each of the movies in the list in the order they are in the list 
-	public void printList(){
-		Movie temp = head;
-		System.out.println();
-		for (int i = 0; i < length; i++){
-			System.out.println(temp.getTitle() + "," + temp.getID());
-			temp = temp.getNextM();
+		catch(IllegalArgumentException i){
+			System.out.println("You did not enter one of the choices. Choose Again");
+			i.printStackTrace(); 
 		}
 	}
-
 }
+
+			
+		
+	
