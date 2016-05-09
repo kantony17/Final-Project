@@ -19,11 +19,11 @@ public class movieDatabase implements java.io.Serializable{
 
 	private int numMovies;
 
-	public movieDatabase(){
+	public movieDatabase(MovieHashTable_ID moviesHash0, MovieReleaseDateBST moviesBST0, MovieTomatoScoreHeap moviesHeap0){
 
-		moviesHash = new MovieHashTable_ID();
-		moviesBST = new MovieReleaseDateBST();
-		moviesHeap = new MovieTomatoScoreHeap();
+		moviesHash = moviesHash0;
+		moviesBST = moviesBST0;
+		moviesHeap = moviesHeap0;
 
 		numMovies = 0; 
 	}
