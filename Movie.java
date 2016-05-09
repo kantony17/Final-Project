@@ -17,7 +17,7 @@ public class Movie implements java.io.Serializable{
 	//instance variables
 	private String title;
 	private int releaseDate;
-	private int id;
+	private static int id = 10000;
 	private int tomatoScore;
 	private boolean haveMovie;
 	private Movie nextM;
@@ -42,7 +42,8 @@ public class Movie implements java.io.Serializable{
 	public Movie(String title, int releaseDate, int id, int tomatoScore){
 		this.title = title;
 		this.releaseDate = releaseDate;
-		this.id = id;
+		//each time a movie is added, its item increases by 1
+		id++;
 		this.tomatoScore = tomatoScore;
 		haveMovie = true;
 		nextM = null;
@@ -106,7 +107,7 @@ public class Movie implements java.io.Serializable{
 		return nextM;
 	}
 	
-	//sets the movie's next pointer
+	//sets the movie's next pointer for stack
 	public void setNextM(Movie nextMItem){
 		nextM = nextMItem;
 	}
