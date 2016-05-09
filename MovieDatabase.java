@@ -132,23 +132,19 @@ public class MovieDatabase implements java.io.Serializable{
 
 	public void centralDelete(){
 		Movie outMovie = moviesHeap.findLeastRatedMovie();
-
-
 		moviesHash.delete(outMovie.getID());
 		moviesBST.deleteMovie(outMovie);
-
 		moviesHeap.deleteLeastRatedMovie();
-
 		numMovies--;
-
-
-		System.out.println(outMovie.getTitle() + " has been removed from the database");
-
+		System.out.println("\n" + outMovie.getTitle() + " has been removed from the database");
 
 		if (numMovies > 1){
-			System.out.println("The database now has " + numMovies + " movies."); 
+			System.out.println("The database now has " + numMovies + " movies.\n"); 
 		}
-		else{
+		else if (numMovies <= 0){
+			System.out.println("The database now has 0 movies.\n");
+		}
+		else if (numMovies == 1){
 			System.out.println("The database now has 1 movie.\n");
 		}
 

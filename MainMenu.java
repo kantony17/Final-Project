@@ -17,25 +17,26 @@ public class MainMenu{
 	MovieTomatoScoreHeap moviesHeap = new MovieTomatoScoreHeap();
 	MovieReleaseDateBST moviesBST = new MovieReleaseDateBST();
 	RecentlyWatchedStack moviesStack = new RecentlyWatchedStack();
-	MovieDatabase moviesDatabase = new MovieDatabase();
+	MovieDatabase moviesDatabase = new MovieDatabase(moviesHash, moviesBST, moviesHeap);
 
 	//constructor 
 	public MainMenu(){
 		try{
 			Scanner f = new Scanner(System.in);
-			System.out.println("Please enter your username:  ");
+			System.out.println("\n--------Welcome to NetFlix!--------\nPlease Login");
+			System.out.print("Username:  ");
 			String username = f.next();
 			if (username.equals("admin")){
 				try{
 					Scanner p = new Scanner(System.in);
-					System.out.println("Please input your admin password:  ");
+					System.out.print("Password:  ");
 					String password = p.next();
 					if (password.equals(passwordA)){
 						int adminInput = 5;
 						while (adminInput != 4){
 							try{
 								Scanner t = new Scanner(System.in);
-								System.out.println("1. Add a movie to the database.\n2. View least-rated movie in the database.\n3. View all movies in database(by order of release date).\n4. Pick this option to quit.\n");
+								System.out.println("\nWelcome Admin\n Please select an option from the list below:\n1. Add a movie to the database.\n2. View least-rated movie in the database.\n3. View all movies in database(by order of release date).\n4. Pick this option to quit.\n");
 								System.out.print("Please select an option 1-4: ");
 								adminInput = t.nextInt();
 								if (adminInput == 1){ //add movie to the database
@@ -44,7 +45,7 @@ public class MainMenu{
 								else if (adminInput == 2){ //view least rated movie in the database
 									System.out.println("The least rated movie is:   ");
 									Movie temp = moviesHeap.findLeastRatedMovie();
-									System.out.println(temp);
+									System.out.println(temp.getTitle());
 									try{
 										Scanner l = new Scanner(System.in); //give option to delete the least rated move
 										System.out.println("Would you like to delete this movie from the database? Yes or No. ");
@@ -64,8 +65,8 @@ public class MainMenu{
 								}
 							
 								else if (adminInput == 3){ //view all movies in the database
-									System.out.println("The folowing movies are available for viewing in the database:  ");
-									moviesBST.printMovieTree();
+									System.out.println("The folowing movies are available for viewing in the database:\n");
+									moviesBST.traverseMovieTree();
 								}
 							}
 							catch(IllegalArgumentException z){
@@ -83,7 +84,7 @@ public class MainMenu{
 			else if (username.equals("customer")){
 				try{
 					Scanner o = new Scanner(System.in);
-					System.out.println("Please input your customer password:  ");
+					System.out.print("Password:  ");
 					String password = o.next();
 					if (password.equals(passwordC)){
 						try{
