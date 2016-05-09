@@ -17,7 +17,7 @@ public class MainMenu{
 	MovieTomatoScoreHeap movieHeap = new MovieTomatoScoreHeap();
 	MovieReleaseDateBST movieBST = new MovieReleaseDateBST();
 	RecentlyWatchedStack movieStack = new RecentlyWatchedStack();
-	movieDatabase movieDatabase = new movieDatabase();
+	MovieDatabase movieDatabase = new MovieDatabase();
 
 	//constructor 
 	public MainMenu(){
@@ -30,45 +30,49 @@ public class MainMenu{
 					Scanner p = new Scanner(System.in);
 					System.out.println("Please input your admin password:  ");
 					String password = p.next();
-					if (password == passwordA){
-						try{
-							Scanner t = new Scanner(System.in);
-							System.out.println("1. Add a movie to the database. \n 2. View least-rated movie in the database. \n 3. View all movies in database(by order of release date). ");
-							int adminInput = t.nextInt();
-							if (adminInput == 1){ //add movie to the database
-								movieDatabase.centralAdd(); //central add makes sure it changes in all of the data structures 
-							}
-							else if (adminInput == 2){ //view least rated movie in the database
-								System.out.println("The least rated movie is:   ");
-								Movie temp = movieHeap.findLeastRatedMovie();
-								System.out.println(temp);
-								try{
-									Scanner l = new Scanner(System.in); //give option to delete the least rated move
-									System.out.println("Would you like to delete this movie from the database? Yes or No. ");
-									String answer = l.next();
-									if (answer.equals("Yes")){
-										movieDatabase.centralDelete();
-									}
-									else if (answer.equals("No")){
-										System.out.println("This movie will remain in the database.");
-									}
+					if (password.equals(passwordA)){
+						int adminInput = 5;
+						while (adminInput != 4){
+							try{
+								Scanner t = new Scanner(System.in);
+								System.out.println("1. Add a movie to the database.\n2. View least-rated movie in the database.\n3. View all movies in database(by order of release date).\n4. Pick this option to quit.\n");
+								System.out.print("Please select an option 1-4: ");
+								adminInput = t.nextInt();
+								if (adminInput == 1){ //add movie to the database
+									movieDatabase.centralAdd(); //central add makes sure it changes in all of the data structures 
 								}
-								catch(IllegalArgumentException l){
-										System.out.println("You did not enter one of the choices. Choose Again");
-										l.printStackTrace();
-								}
+								else if (adminInput == 2){ //view least rated movie in the database
+									System.out.println("The least rated movie is:   ");
+									Movie temp = movieHeap.findLeastRatedMovie();
+									System.out.println(temp);
+									try{
+										Scanner l = new Scanner(System.in); //give option to delete the least rated move
+										System.out.println("Would you like to delete this movie from the database? Yes or No. ");
+										String answer = l.next().toLowerCase();
+										if (answer.equals("yes")){
+											movieDatabase.centralDelete();
+										}
+										else if (answer.equals("no")){
+											System.out.println("This movie will remain in the database.");
+										}
+									}
+									catch(IllegalArgumentException l){
+											System.out.println("You did not enter one of the choices. Choose Again");
+											l.printStackTrace();
+									}
 
+								}
+							
+								else if (adminInput == 3){ //view all movies in the database
+									System.out.println("The folowing movies are available for viewing in the database:  ");
+									movieBST.printMovieTree();
+								}
 							}
-						
-							else if (adminInput == 3){ //view all movies in the database
-								System.out.println("The folowing movies are available for viewing in the database:  ");
-								movieBST.printMovieTree();
+							catch(IllegalArgumentException z){
+								System.out.println("You did not enter one of the choices. Choose Again");
+								z.printStackTrace(); 
 							}
-						}
-						catch(IllegalArgumentException z){
-							System.out.println("You did not enter one of the choices. Choose Again");
-							z.printStackTrace(); 
-						}
+						}	
 					}
 				}
 				catch(IllegalArgumentException a){
@@ -81,10 +85,11 @@ public class MainMenu{
 					Scanner o = new Scanner(System.in);
 					System.out.println("Please input your customer password:  ");
 					String password = o.next();
-					if (password == passwordC){
+					if (password.equals(passwordC)){
 						try{
 							Scanner s = new Scanner(System.in);
-							System.out.println("What would you like to do today? \n 1. Play a Movie \n 2. See movies in your wish list \n 3. Add a new movie to your wish list \n 4. Delete a movie from your wishlist \n 5. View your recently watched movies ");
+							System.out.println("What would you like to do today? \n 1. Play a Movie \n 2. See movies in your wish list \n 3. Add a new movie to your wish list \n 4. Delete a movie from your wishlist \n 5. View your recently watched movies \n");
+							System.out.print("Please select an option 1-5: ");
 							int userInput = s.nextInt();
 							if (userInput == 1){ //play first movie of wishlist
 								wishlist.firstMovie();
