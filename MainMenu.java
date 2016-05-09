@@ -19,7 +19,7 @@ public class MainMenu{
 			Scanner f = new Scanner(System.in);
 			System.out.println("Please enter your username:  ");
 			String username = f.next();
-			if (username == "admin"){
+			if (username.equals("admin")){
 				try{
 					Scanner p = new Scanner(System.in);
 					System.out.println("Please input your admin password:  ");
@@ -39,10 +39,10 @@ public class MainMenu{
 									Scanner l = new Scanner(System.in);
 									System.out.println("Would you like to delete this movie from the database? Yes or No. ");
 									String answer = l.next();
-									if (answer == "Yes"){
+									if (answer.equals("Yes")){
 										//movieHeap.centralDelete();
 									}
-									else if (answer == "No"){
+									else if (answer.equals("No")){
 										System.out.println("This movie will remain in the database.");
 									}
 								}
@@ -68,7 +68,7 @@ public class MainMenu{
 						a.printStackTrace();
 				}
 			}
-			else if (username == "customer"){
+			else if (username.equals("customer")){
 				try{
 					Scanner o = new Scanner(System.in);
 					System.out.println("Please input your customer password:  ");
@@ -84,10 +84,10 @@ public class MainMenu{
 									Scanner e = new Scanner(System.in);
 									System.out.println("Would you like to delete this movie from the wishlist after you've seen it? Yes or No");
 									String userInput5 = e.next();
-									if (userInput5 == "Yes"){
+									if (userInput5.equals("Yes")){
 										wishlist.delete(wishlist.firstMovie().getID());
 									}
-									else if (userInput5 == "No"){
+									else if (userInput5.equals("No")){
 										System.out.println("This movie will remain in your wish list.");;
 									}
 								}
