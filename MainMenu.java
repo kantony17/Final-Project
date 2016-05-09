@@ -1,4 +1,9 @@
-//Main Menu
+/*Main Menu
+-the main menu implements scanners in order to distinguish between admins and customers
+-customers have acess to edit their wishlists
+-admins have options to acess and edit the movie database
+*/
+
 
 import java.util.Scanner;
 
