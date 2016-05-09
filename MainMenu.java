@@ -13,11 +13,11 @@ public class MainMenu{
 	private String passwordA = "netflixAdmin";
 	private String passwordC = "netflixCust";
 	WishList wishlist = new WishList();
-	MovieHashTable_ID movieHash = new MovieHashTable_ID();
-	MovieTomatoScoreHeap movieHeap = new MovieTomatoScoreHeap();
-	MovieReleaseDateBST movieBST = new MovieReleaseDateBST();
-	RecentlyWatchedStack movieStack = new RecentlyWatchedStack();
-	MovieDatabase movieDatabase = new MovieDatabase();
+	MovieHashTable_ID moviesHash = new MovieHashTable_ID();
+	MovieTomatoScoreHeap moviesHeap = new MovieTomatoScoreHeap();
+	MovieReleaseDateBST moviesBST = new MovieReleaseDateBST();
+	RecentlyWatchedStack moviesStack = new RecentlyWatchedStack();
+	MovieDatabase moviesDatabase = new MovieDatabase();
 
 	//constructor 
 	public MainMenu(){
@@ -39,18 +39,18 @@ public class MainMenu{
 								System.out.print("Please select an option 1-4: ");
 								adminInput = t.nextInt();
 								if (adminInput == 1){ //add movie to the database
-									movieDatabase.centralAdd(); //central add makes sure it changes in all of the data structures 
+									moviesDatabase.centralAdd(); //central add makes sure it changes in all of the data structures 
 								}
 								else if (adminInput == 2){ //view least rated movie in the database
 									System.out.println("The least rated movie is:   ");
-									Movie temp = movieHeap.findLeastRatedMovie();
+									Movie temp = moviesHeap.findLeastRatedMovie();
 									System.out.println(temp);
 									try{
 										Scanner l = new Scanner(System.in); //give option to delete the least rated move
 										System.out.println("Would you like to delete this movie from the database? Yes or No. ");
 										String answer = l.next().toLowerCase();
 										if (answer.equals("yes")){
-											movieDatabase.centralDelete();
+											moviesDatabase.centralDelete();
 										}
 										else if (answer.equals("no")){
 											System.out.println("This movie will remain in the database.");
@@ -65,7 +65,7 @@ public class MainMenu{
 							
 								else if (adminInput == 3){ //view all movies in the database
 									System.out.println("The folowing movies are available for viewing in the database:  ");
-									movieBST.printMovieTree();
+									moviesBST.printMovieTree();
 								}
 							}
 							catch(IllegalArgumentException z){
@@ -116,7 +116,7 @@ public class MainMenu{
 								Scanner n = new Scanner(System.in);
 								System.out.println("Enter the ID of the movie you would like to add:   ");
 								int userInput2 = n.nextInt();
-								Movie movie = movieHash.lookUp(userInput2);
+								Movie movie = moviesHash.lookUp(userInput2);
 								wishlist.addNewMovie(movie);
 							}
 							else if (userInput == 4){ //delete movie from wishlist
@@ -126,7 +126,7 @@ public class MainMenu{
 								wishlist.delete(userInput3);
 							}
 							else if (userInput == 5){ //print recently watched movies
-								movieStack.printRecentlyWatchedStack();
+								moviesStack.printRecentlyWatchedStack();
 							}
 						}
 						catch(IllegalArgumentException j){
