@@ -8,10 +8,8 @@ public class Customer{
 	private int CCN;
 	private int key;
 	private Customer nextC;
-	private //customer list of movies
 
-
-	public Cnode(String name0, String email0, int CCN0){
+	public Customer(String name0, String email0, int CCN0){
 		name = name0;
 		email = email0;
 		CCN = CCN0;
