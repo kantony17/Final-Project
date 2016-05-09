@@ -16,7 +16,8 @@ public class MainMenu{
 	MovieHashTable_ID movieHash = new MovieHashTable_ID();
 	MovieTomatoScoreHeap movieHeap = new MovieTomatoScoreHeap();
 	MovieReleaseDateBST movieBST = new MovieReleaseDateBST();
-	//RecentlyWatchedStack movieStack = new RecentlyWatchedStack();
+	RecentlyWatchedStack movieStack = new RecentlyWatchedStack();
+	movieDatabase movieDatabase = new movieDatabase();
 
 	//constructor 
 	public MainMenu(){
@@ -34,18 +35,19 @@ public class MainMenu{
 							Scanner t = new Scanner(System.in);
 							System.out.println("1. Add a movie to the database. \n 2. View least-rated movie in the database. \n 3. View all movies in database(by order of release date). ");
 							int adminInput = t.nextInt();
-							if (adminInput == 1){
-								//movieHeap.centralAdd();
+							if (adminInput == 1){ //add movie to the database
+								movieDatabase.centralAdd(); //central add makes sure it changes in all of the data structures 
 							}
-							
-							else if (adminInput == 2){
+							else if (adminInput == 2){ //view least rated movie in the database
+								System.out.println("The least rated movie is:   ");
 								Movie temp = movieHeap.findLeastRatedMovie();
+								System.out.println(temp);
 								try{
-									Scanner l = new Scanner(System.in);
+									Scanner l = new Scanner(System.in); //give option to delete the least rated move
 									System.out.println("Would you like to delete this movie from the database? Yes or No. ");
 									String answer = l.next();
 									if (answer.equals("Yes")){
-										//movieHeap.centralDelete();
+										movieDatabase.centralDelete();
 									}
 									else if (answer.equals("No")){
 										System.out.println("This movie will remain in the database.");
@@ -58,7 +60,8 @@ public class MainMenu{
 
 							}
 						
-							else if (adminInput == 3){
+							else if (adminInput == 3){ //view all movies in the database
+								System.out.println("The folowing movies are available for viewing in the database:  ");
 								movieBST.printMovieTree();
 							}
 						}
@@ -83,10 +86,10 @@ public class MainMenu{
 							Scanner s = new Scanner(System.in);
 							System.out.println("What would you like to do today? \n 1. Play a Movie \n 2. See movies in your wish list \n 3. Add a new movie to your wish list \n 4. Delete a movie from your wishlist \n 5. View your recently watched movies ");
 							int userInput = s.nextInt();
-							if (userInput == 1){
+							if (userInput == 1){ //play first movie of wishlist
 								wishlist.firstMovie();
 								try{
-									Scanner e = new Scanner(System.in);
+									Scanner e = new Scanner(System.in); //give them the option to delete after watching
 									System.out.println("Would you like to delete this movie from the wishlist after you've seen it? Yes or No");
 									String userInput5 = e.next();
 									if (userInput5.equals("Yes")){
@@ -101,24 +104,24 @@ public class MainMenu{
 									k.printStackTrace();
 								}
 							}
-							else if (userInput == 2){
+							else if (userInput == 2){ //print wishlist
 								wishlist.printList();
 							}
-							else if (userInput == 3){
+							else if (userInput == 3){ //add movie to wishlist
 								Scanner n = new Scanner(System.in);
 								System.out.println("Enter the ID of the movie you would like to add:   ");
 								int userInput2 = n.nextInt();
 								Movie movie = movieHash.lookUp(userInput2);
 								wishlist.addNewMovie(movie);
 							}
-							else if (userInput == 4){
+							else if (userInput == 4){ //delete movie from wishlist
 								Scanner d = new Scanner(System.in);
 								System.out.println("Enter the ID of the movie you would like to delete:    ");
 								int userInput3 = d.nextInt();
 								wishlist.delete(userInput3);
 							}
-							else if (userInput ==5){
-								//movieStack.printRecentlyWatchedStack();
+							else if (userInput == 5){ //print recently watched movies
+								movieStack.printRecentlyWatchedStack();
 							}
 						}
 						catch(IllegalArgumentException j){
@@ -139,3 +142,5 @@ public class MainMenu{
 		}
 	}
 }
+
+
