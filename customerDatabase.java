@@ -33,7 +33,6 @@ public class CustomerDatabase implements java.io.Serializable{
 
 
 
-
 		Scanner scan = new Scanner(System.in);
 		Scanner nums = new Scanner(System.in);
 
@@ -114,6 +113,26 @@ public class CustomerDatabase implements java.io.Serializable{
 		}
 	}
 
+	public boolean hasCustomer(String email0){
+		thisCustomer = findCustomer(email0);
+		if (thisCustomer != null){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public boolean passwordMatch(String email0, String password0){
+		thisCustomer = findCustomer(email0);
+		if (hasCustomer(email0)){
+			return (thisCustomer.getPassword() == password0);
+		}
+		else{
+			return false; 
+		}
+	}
+
 	/*public static void main(String[] args) {
 		CustomerDatabase myCs = new CustomerDatabase();
 		myCs.addCustomer();
@@ -122,6 +141,9 @@ public class CustomerDatabase implements java.io.Serializable{
 		myCs.addCustomer();
 	}*/
 
+
+
+}
 
 
 }
