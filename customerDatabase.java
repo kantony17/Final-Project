@@ -17,6 +17,14 @@ public class CustomerDatabase implements java.io.Serializable{
 	public boolean areNoCustomers(){
 		return customerList == null;
 	}
+	
+		public void printCustomers(){
+		Customer temp = customerList;
+		for (int j > 0; j < numCustomers; j++){
+			System.out.print(temp.getEmail);
+			temp=temp.getNext();
+		}
+	}
 
 	public void addCustomer(){
 		Customer newCustomer = makeCustomer();
@@ -141,9 +149,6 @@ public class CustomerDatabase implements java.io.Serializable{
 		myCs.addCustomer();
 	}*/
 
-
-
-}
 
 
 }
