@@ -114,13 +114,13 @@ public class CustomerDatabase implements java.io.Serializable{
 		}
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		CustomerDatabase myCs = new CustomerDatabase();
 		myCs.addCustomer();
 		myCs.addCustomer();
 		myCs.addCustomer();
 		myCs.addCustomer();
-	}
+	}*/
 
 
 
