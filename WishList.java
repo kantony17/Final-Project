@@ -4,7 +4,7 @@
 import java.util.*;
 import java.io.*;
 
-public class WishList{
+public class WishList implements java.io.Serializable{
 
 	//instance variables
 	private int length;
@@ -15,7 +15,7 @@ public class WishList{
 	private Movie prevEnd; 
 
 	//constructor
-	public WishList implements java.io.Serializable(){
+	public WishList(){
 		length = 0;
 	}
 
@@ -28,6 +28,9 @@ public class WishList{
 				Scanner s = new Scanner(System.in);
 				System.out.println("Where would you like this movie to be added? \n A. Front \n B. End \n C. Other");
 				userInput = s.next();
+				if (!(userInput.equals("A") || userInput.equals("B") || userInput.equals("C"))){
+					System.out.println("Sorry that is not one of the options. Try again. ");
+				}
 			}
 			//inserts the movie to the front of the wishlist 
 			if (userInput.equals("A")){ 
