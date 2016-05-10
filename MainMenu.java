@@ -2,6 +2,7 @@
 -the main menu implements scanners in order to distinguish between admins and customers
 -customers have acess to edit their wishlists
 -admins have options to acess and edit the movie database
+-new customers can create profiles and then become customers!
 */
 
 import java.io.*;
@@ -45,6 +46,9 @@ public class MainMenu implements java.io.Serializable{
 			username = f.next();
 			username = username.replaceAll("\\s+",""); //removes white space and characters
 			returningCust = customerDatabase.hasCustomer(username);
+			if ((!(username.equals("admin"))) && (!(username.equals("1"))) && ((returningCust == false))){
+				System.out.println("\nPlease try again, that wasn't an option!\n");
+			}
 		}
 		if (username.equals("admin")){
 			password = "";
@@ -52,6 +56,9 @@ public class MainMenu implements java.io.Serializable{
 				Scanner p = new Scanner(System.in);
 				System.out.print("Password:  ");
 				password = p.next();
+				if(!(password.equals(passwordA))){
+					System.out.println("\nPlease try again, that wasn't right...\n");
+				}
 			}
 			if (password.equals(passwordA)){
 				System.out.println("\nWelcome Admin!\n");
@@ -69,7 +76,7 @@ public class MainMenu implements java.io.Serializable{
 						else if (adminInput == 2){ //view least rated movie in the database
 							Movie temp = moviesHeap.findLeastRatedMovie();
 							if (temp == null){
-								System.out.println("Sorry there are no movies in the database\n");
+								System.out.println("\nSorry there are no movies in the database\n");
 							}
 							else{
 								System.out.println("The least rated movie is:   ");
@@ -80,6 +87,9 @@ public class MainMenu implements java.io.Serializable{
 									Scanner l = new Scanner(System.in); //give option to delete the least rated move
 									System.out.println("Would you like to delete this movie from the database? Yes or No. ");
 									answer = l.next().toLowerCase();
+									if (!(answer.equals("yes")) && !(answer.equals("no"))){
+										System.out.println("That was neither 'yes' or 'no', why dont you try again...\n");
+									}
 								}
 								if (answer.equals("yes")){
 									moviesDatabase.centralDelete();
@@ -116,20 +126,16 @@ public class MainMenu implements java.io.Serializable{
 			customerDatabase.printCustomers(); // TEST check to see if they exist in the database
 
 			while ((customerDatabase.passwordMatch(username, password)) == false){
-				if (customerDatabase.hasCustomer(username) == false);{
-					System.out.println("doesnt exist :( ");	
-				}
-
 				System.out.println("Nice try... You're password is wrong. Why don't you enter a different password.");
 				System.out.print("Password:  ");
 				password = o.next();
 				password = password.replaceAll("\\s+",""); //removes white space and characters
 			}
+
 			if (password.equals(passwordC)){
 				System.out.println("\nWelcome Customer!\n");
 				int userInput9 = 0;
 				while (userInput9 != 6){
-
 					Scanner s = new Scanner(System.in);
 					System.out.println("What would you like to do today? Choose and option (1-6) and press enter.\n1. Play a Movie\n2. See movies in your wish list\n3. Add a new movie to your wish list\n4. Delete a movie from your wishlist\n5. View your recently watched movies\n6. Quit\n");
 					System.out.print("Option: ");
@@ -179,8 +185,3 @@ public class MainMenu implements java.io.Serializable{
 		}
 	}	
 }
-
-
-
-
-
