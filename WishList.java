@@ -1,7 +1,7 @@
 //Wish List for Customers
 
 
-import java.util.Scanner;
+import java.util.*;
 
 public class WishList{
 
@@ -21,113 +21,108 @@ public class WishList{
 	//add new movie in any location, O(n) runtime
 	public void addNewMovie(Movie movie){
 		if (length < 20){
-			try{
+			String userInput = "";
+			while (!(userInput.equals("A") || userInput.equals("B") || userInput.equals("C"))){
 				Scanner s = new Scanner(System.in);
 				System.out.println("Where would you like this movie to be added? \n A. Front \n B. End \n C. Other");
-				String userInput = s.next();
-				if (userInput.equals("A")){ //insert to the front of wishlist
-					if (length == 0){
-						head = end = movie;
-						System.out.println("The movie you have added is the first movie of your wish list\n");
-					}
-					else if(length == 1){
-						Movie temp = head;
-						head = movie;
-						head.setNextM(temp);
-						end = temp;
-						System.out.println("The movie has been added to the front, but there are " + length + " other movies in your list \n");
+				userInput = s.next();
+			}
+			if (userInput.equals("A")){ //insert to the front of wishlist
+				if (length == 0){
+					head = end = movie;
+					System.out.println("The movie you have added is the first movie of your wish list\n");
+				}
+				else if(length == 1){
+					Movie temp = head;
+					head = movie;
+					head.setNextM(temp);
+					end = temp;
+					System.out.println("The movie has been added to the front, but there are " + length + " other movies in your list \n");
 
+				}
+				else{//lengths greater than 1
+					Movie temp = head.getNextM();
+					Movie temp2 = head;
+					head = movie;
+					movie.setNextM(temp2);
+					System.out.println("The movie has been added to the front, but there are " + length + " other movies in your list \n");
+				}
+				length++;
+			}
+			else if (userInput.equals("B")){ //insert a movie to the end of the wishlist
+				if (length == 0){
+					head = end = movie;
+					length++;
+					System.out.println("The movie has been added to the end of your list.");
+				}
+				else{
+					temp = head;
+					for (int i = 0; i < length - 1; i++){
+						temp = temp.getNextM();
 					}
-					else{//lengths greater than 1
-						Movie temp = head.getNextM();
-						Movie temp2 = head;
-						head = movie;
-						movie.setNextM(temp2);
-						System.out.println("The movie has been added to the front, but there are " + length + " other movies in your list \n");
-					}
+					end = temp;
+					temp.setNextM(movie);
+					end = movie;
 					length++;
 				}
-				else if (userInput.equals("B")){ //insert a movie to the end of the wishlist
-					if (length == 0){
-						head = end = movie;
+			}
+			else if (userInput.equals("C")){ //option C- insert to a specified (integer) spot
+				Scanner x = new Scanner(System.in);
+				System.out.println("Enter a number 1 - " + (length+1) + " where you'd like this movie to be played:  ");
+				int userInput2 = x.nextInt();
+				if (length == 0){ //to insert at the beginning when the list is empty
+					head = end = movie;
+					length++;
+					System.out.println("The movie has been added to your list.");
+				}
+				else if (userInput2 == 1){ //insert into the front with other movies already in the list
+					Movie temp = head.getNextM();
+					Movie temp2 = head;
+					head = movie;
+					movie.setNextM(temp2);
+					length++;
+					System.out.println("The movie has been added to the front, but there are " + length + " other movies in your list \n");
+				}
+				else if (userInput2 == (length + 1)){ //if they want to insert at the end
+					if (length == 1){
+						head.setNextM(movie);
+						movie = end;
 						length++;
-						System.out.println("The movie has been added to the end of your list.");
+					}
+					else if (length == 2){
+						for (int i = 0; i < length - 1; i++){
+							end = head.getNextM();
+						}
+						Movie temp = end;
+						end = movie;
+						temp.setNextM(movie);
+						length++;
 					}
 					else{
-						temp = head;
-						for (int i = 0; i < length - 1; i++){
-							temp = temp.getNextM();
+						for (int i = 0; i < length - 2; i++){
+							prevEnd = head.getNextM();
+							end = prevEnd.getNextM();
 						}
-						end = temp;
-						temp.setNextM(movie);
+						Movie temp = end;
 						end = movie;
-						length++;
-					}
-				}
-				else if (userInput.equals("C")){ //option C- insert to a specified (integer) spot
-					Scanner x = new Scanner(System.in);
-					System.out.println("Enter a number 1 - " + (length+1) + " where you'd like this movie to be played:  ");
-					int userInput2 = x.nextInt();
-					if (length == 0){ //to insert at the beginning when the list is empty
-						head = end = movie;
-						length++;
-						System.out.println("The movie has been added to your list.");
-					}
-					else if (userInput2 == 1){ //insert into the front with other movies already in the list
-						Movie temp = head.getNextM();
-						Movie temp2 = head;
-						head = movie;
-						movie.setNextM(temp2);
-						length++;
-						System.out.println("The movie has been added to the front, but there are " + length + " other movies in your list \n");
-					}
-					else if (userInput2 == (length + 1)){ //if they want to insert at the end
-						if (length == 1){
-							head.setNextM(movie);
-							movie = end;
-							length++;
-						}
-						else if (length == 2){
-							for (int i = 0; i < length - 1; i++){
-								end = head.getNextM();
-							}
-							Movie temp = end;
-							end = movie;
-							temp.setNextM(movie);
-							length++;
-						}
-						else{
-							for (int i = 0; i < length - 2; i++){
-								prevEnd = head.getNextM();
-								end = prevEnd.getNextM();
-							}
-							Movie temp = end;
-							end = movie;
-							prevEnd.setNextM(temp);
-							temp.setNextM(movie);
-						
-							length++;
-						}
-						System.out.println("The movie has been added to the end of your list \n");
-						
-					}
-					else{ //anywhere else in the middle
-						Movie temp = head;
-						for (int i = 0; i < (userInput2 - 2); i++){
-							temp = temp.getNextM();
-							System.out.println("1");
-						}
-						movie.setNextM(temp.getNextM());
+						prevEnd.setNextM(temp);
 						temp.setNextM(movie);
+					
 						length++;
-						System.out.println("The movie is in position " + userInput2 + " of your list\n");
 					}
+					System.out.println("The movie has been added to the end of your list \n");
+					
 				}
-				
-			}
-			catch(IllegalArgumentException i){
-				System.out.println("You did not enter one of the choices. Choose Again");
-				i.printStackTrace();
+				else{ //anywhere else in the middle
+					Movie temp = head;
+					for (int i = 0; i < (userInput2 - 2); i++){
+						temp = temp.getNextM();
+					}
+					movie.setNextM(temp.getNextM());
+					temp.setNextM(movie);
+					length++;
+					System.out.println("The movie is in position " + userInput2 + " of your list\n");
+				}
 			}
 		}
 		else{
@@ -184,12 +179,11 @@ public class WishList{
 		}
 		else{
 			Movie temp = head;
-			while (temp != null){
-				for (int i = 0; i < length; i++){
-					System.out.println("Title: " + temp.getTitle() + ", " + "ID: " + temp.getID());
-					temp = temp.getNextM();
-				}
+			for (int i = 0; i < length; i++){
+				System.out.println("Title: " + temp.getTitle() + ", " + "ID: " + temp.getID());
+				temp = temp.getNextM();
 			}
+
 		}
 	}
 }
