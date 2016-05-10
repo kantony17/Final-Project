@@ -6,26 +6,81 @@ import java.util.*;
 public class CustomerDatabase implements java.io.Serializable{
 
 	private int numCustomers;
-	private Customer customerList;
+	private Customer[] customerList;
+	private int maxCustomers;
 
 
 	public CustomerDatabase(){
-		customerList = null;
+		customerList = new Customer[97];
+		maxCustomers = 97;
 
 	}
 
 	public boolean areNoCustomers(){
-		return customerList == null;
+		return numCustomers == 0;
 	}
-	
- 	public void printCustomers(){
- 		Customer temp = customerList;
- 		for (int j = 0; j < numCustomers; j++){
- 			System.out.print(temp.getEmail());
- 			temp=temp.getNext();
- 		}
- 	}
 
+
+	public int hash1(int IDNum){
+		return (IDNum%97);
+	}
+
+	public int hash2(int value, int IDNum){
+		return ((value + (IDNum%83) + 1)%97);
+
+
+	}
+	public Customer findCustomer(int IDNum){
+		int counter = 0;
+		int check = hash1(IDNum);
+
+		while ((customerList[check] == null) || (customerList[check].getKey() != IDNum)){
+			check = hash2(check,IDNum);
+			counter++;
+			if (counter > maxCustomers){
+				return null;
+			}
+		}
+		return customerList[check];
+	}
+
+	public void delete(int IDNum){
+		int counter = 0;
+		int check = hash1(IDNum);
+		while ((customerList[check] == null) || (customerList[check].getKey() != IDNum)){
+			check = hash2(check,IDNum);
+		}
+
+		customerList[check] = null;
+		numCustomers--;
+
+	}
+
+	public void addCustomer(){
+		Customer newCustomer = makeCustomer();
+
+		int counter = 0;
+		int place = hash1(newCustomer.getKey());
+		while ((counter < maxCustomers) && (customerList[place] != null)){
+			place = hash2(place,newCustomer.getKey());
+			counter++;	
+		}
+
+		if (numCustomers == maxCustomers){
+			System.out.println("Database is full; please make space in order to add " + newCustomer.getName());
+		}
+
+		else{
+			customerList[place] = newCustomer;
+			numCustomers++;
+		}
+
+	}
+
+
+
+
+	/*
 	public void addCustomer(){
 		Customer newCustomer = makeCustomer();
 		newCustomer.setNext(customerList);
@@ -33,6 +88,16 @@ public class CustomerDatabase implements java.io.Serializable{
 		numCustomers++;
 		System.out.println("*You have been added. Welcome to the Netflix family!*");
 	}
+
+	public void printCustomers(){
+		Customer temp = customerList;
+		for (int j = 0; j < numCustomers; j++){
+			System.out.print(temp.getEmail());
+			temp=temp.getNext();
+		}
+	}
+
+	*/
 
 	private Customer makeCustomer(){
 		System.out.println("\n--------Customer Adding Portal--------");
@@ -71,6 +136,7 @@ public class CustomerDatabase implements java.io.Serializable{
 
 
 		Long CCN = null;
+		String ccnGo = "";
 
 		while(true){
 			try{
@@ -78,7 +144,10 @@ public class CustomerDatabase implements java.io.Serializable{
 				while ((CCN < 0000000000000000L) || (CCN > 9999999999999999L)){
 					System.out.print("ERROR! Please enter your 16 digit card number as instructed: ");
 					CCN = nums.nextLong();
+
 				}
+				ccnGo = Long.toString(CCN);
+
 				break;
 				
 			}
@@ -87,16 +156,17 @@ public class CustomerDatabase implements java.io.Serializable{
 				nums.next();
 				continue;
 			}
+			
 		}
 
-		Customer addingCustomer = new Customer(name, email, CCN, password2);
+		Customer addingCustomer = new Customer(name, email, ccnGo, password2);
 
 		System.out.println();
 
 		return addingCustomer;
 	}
 
-	public Customer findCustomer(String email){
+	/*public Customer findCustomer(String email){
 		if (areNoCustomers() == false){
 			Customer temp = customerList;
 
@@ -121,8 +191,10 @@ public class CustomerDatabase implements java.io.Serializable{
 		}
 	}
 
-	public boolean hasCustomer(String email0){
-		thisCustomer = findCustomer(email0);
+	*/
+
+	public boolean hasCustomer(int last4Digits){
+		Customer thisCustomer = findCustomer(last4Digits);
 		if (thisCustomer != null){
 			return true;
 		}
@@ -131,9 +203,23 @@ public class CustomerDatabase implements java.io.Serializable{
 		}
 	}
 
-	public boolean passwordMatch(String email0, String password0){
-		thisCustomer = findCustomer(email0);
-		if (hasCustomer(email0)){
+	/*
+
+
+	public boolean hasCustomer(String email0){
+		Customer thisCustomer = findCustomer(email0);
+		if (thisCustomer != null){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	*/
+
+	public boolean passwordMatch(int last4Digits, String password0){
+		Customer thisCustomer = findCustomer(last4Digits);
+		if (hasCustomer(last4Digits)){
 			return (thisCustomer.getPassword() == password0);
 		}
 		else{
@@ -147,8 +233,14 @@ public class CustomerDatabase implements java.io.Serializable{
 		myCs.addCustomer();
 		myCs.addCustomer();
 		myCs.addCustomer();
-	}*/
+	
 
 
+
+	}
+	*/
 
 }
+
+
+
