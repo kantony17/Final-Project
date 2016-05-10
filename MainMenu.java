@@ -127,7 +127,8 @@ public class MainMenu implements java.io.Serializable{
 				System.out.print("Password:  ");
 				password = o.next();
 				if ((customerDatabase.passwordMatch(username, password)) == false){
-					System.out.println("\n Sorry that password doesnt match the CCN you entered, please try again\n")
+					System.out.println("\n Sorry that password doesnt match the CCN you entered, please try again\n");
+				}
 			}
 
 			System.out.println("\nWelcome Customer!\n");
