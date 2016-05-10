@@ -2,6 +2,7 @@
 
 
 import java.util.*;
+import java.io.*;
 
 public class WishList{
 
@@ -14,7 +15,7 @@ public class WishList{
 	private Movie prevEnd; 
 
 	//constructor
-	public WishList(){
+	public WishList implements java.io.Serializable(){
 		length = 0;
 	}
 
