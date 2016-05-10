@@ -23,11 +23,12 @@ public class MovieTomatoScoreHeap implements java.io.Serializable{
 	//variable n to keep track of the number of movies in the heap
 	private int nMH;
 	private Movie[] pq;
+	private Movie noMoviesLeft;
 
 	//create an empty heap w/ array of size 251
 	public MovieTomatoScoreHeap(){
 		nMH = 0;
-		pq = new Movie[251];		
+		pq = new Movie[251];
 	}
 
 	//return if the heap is empty
@@ -50,9 +51,9 @@ public class MovieTomatoScoreHeap implements java.io.Serializable{
 
 	//check a child's priority against its parent. Swap the two if necessary
 	private void checkPriorityUp(int x){
-		if (pq[x].getTomatoScore() < pq[x/2].getTomatoScore()){
-			swap(x,x/2);
-			checkPriorityUp(x/2);
+		if (pq[x].getTomatoScore() < pq[(x-1)/2].getTomatoScore()){
+			swap(x,(x-1)/2);
+			checkPriorityUp((x-1)/2);
 		}
 	}
 
@@ -65,6 +66,9 @@ public class MovieTomatoScoreHeap implements java.io.Serializable{
 
 	//returns the lowest rated movie in the database
 	public Movie findLeastRatedMovie(){
+		if (nMH == 0){
+			pq[0] = null;
+		}
 		return pq[0];
 	}
 
@@ -114,6 +118,7 @@ public class MovieTomatoScoreHeap implements java.io.Serializable{
 		}
 		else{
 			System.out.println("Sorry, there are no items left in the priority queue to delete.");
+			pq[0] = null;
 		}
 		return null;
 	}
