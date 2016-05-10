@@ -1,20 +1,24 @@
 //Cnode.java
 
 
-public class Customer{ 
+public class Customer implements java.io.Serializable{ 
 
 	private String name;
 	private String email;
-	private int CCN;
-	private int key;
-	private Customer nextC;
+	private Long CCN;
+	private Long key;
+	private Customer next;
+	private String password;
+	//private //customer list of movies
 
-	public Customer(String name0, String email0, int CCN0){
+
+	public Customer(String name0, String email0, Long CCN0, String password0){
 		name = name0;
 		email = email0;
 		CCN = CCN0;
 		key = CCN;
-		nextC = null;
+		next = null;
+		password = password0;
 
 	}
 
@@ -26,21 +30,21 @@ public class Customer{
 		return email;
 	}
 
-	public int getCCN(){
+	public Long getCCN(){
 		return CCN;
 	}
 
-	public int getKey(){
+	public Long getKey(){
 		return key;
 	}
 
-	public Customer getNextC(){
-		return nextC;
+	public Customer getNext(){
+		return next;
 	}
 
 
-	public void setNextC(Customer x){
-		nextC = x;
+	public void setNext(Customer x){
+		next = x;
 	}
 
 }
