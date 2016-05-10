@@ -21,6 +21,7 @@ public class WishList{
 
 	//add new movie in any location, O(n) runtime
 	public void addNewMovie(Movie movie){
+		//wishlist can only hold up to 20 movies at a time
 		if (length < 20){
 			String userInput = "";
 			while (!(userInput.equals("A") || userInput.equals("B") || userInput.equals("C"))){
@@ -28,7 +29,8 @@ public class WishList{
 				System.out.println("Where would you like this movie to be added? \n A. Front \n B. End \n C. Other");
 				userInput = s.next();
 			}
-			if (userInput.equals("A")){ //insert to the front of wishlist
+			//inserts the movie to the front of the wishlist 
+			if (userInput.equals("A")){ 
 				if (length == 0){
 					head = end = movie;
 					System.out.println("The movie you have added is the first movie of your wish list\n");
@@ -41,7 +43,8 @@ public class WishList{
 					System.out.println("The movie has been added to the front, but there are " + length + " other movies in your list \n");
 
 				}
-				else{//lengths greater than 1
+				//lengths greater that 1
+				else{
 					Movie temp = head.getNextM();
 					Movie temp2 = head;
 					head = movie;
@@ -50,7 +53,8 @@ public class WishList{
 				}
 				length++;
 			}
-			else if (userInput.equals("B")){ //insert a movie to the end of the wishlist
+			//inserts the movie to the end of the wishlist 
+			else if (userInput.equals("B")){ 
 				if (length == 0){
 					head = end = movie;
 					length++;
@@ -67,16 +71,19 @@ public class WishList{
 					length++;
 				}
 			}
-			else if (userInput.equals("C")){ //option C- insert to a specified (integer) spot
+			//inserts the movie to a specified (integer) position 
+			else if (userInput.equals("C")){ 
 				Scanner x = new Scanner(System.in);
 				System.out.println("Enter a number 1 - " + (length+1) + " where you'd like this movie to be played:  ");
 				int userInput2 = x.nextInt();
-				if (length == 0){ //to insert at the beginning when the list is empty
+				//insert at the beginning when the list is empty
+				if (length == 0){ 
 					head = end = movie;
 					length++;
 					System.out.println("The movie has been added to your list.");
 				}
-				else if (userInput2 == 1){ //insert into the front with other movies already in the list
+				//inserts at the beginning with other movies in the list 
+				else if (userInput2 == 1){ 
 					Movie temp = head.getNextM();
 					Movie temp2 = head;
 					head = movie;
@@ -84,7 +91,8 @@ public class WishList{
 					length++;
 					System.out.println("The movie has been added to the front, but there are " + length + " other movies in your list \n");
 				}
-				else if (userInput2 == (length + 1)){ //if they want to insert at the end
+				//inserts at the end of the list 
+				else if (userInput2 == (length + 1)){ 
 					if (length == 1){
 						head.setNextM(movie);
 						movie = end;
@@ -114,7 +122,8 @@ public class WishList{
 					System.out.println("The movie has been added to the end of your list \n");
 					
 				}
-				else{ //anywhere else in the middle
+				//inserts anywhere else in the middle
+				else{ 
 					Movie temp = head;
 					for (int i = 0; i < (userInput2 - 2); i++){
 						temp = temp.getNextM();
@@ -126,6 +135,7 @@ public class WishList{
 				}
 			}
 		}
+		//if they try to enter more than 20 movies
 		else{
 			System.out.println("Sorry, your wish list is full");
 		}
@@ -141,11 +151,11 @@ public class WishList{
 			}
 			temp = temp.getNextM();
 		}
-		System.out.println("Sorry your movie is not in the wishlist");
+		System.out.println("Sorry that movie is not in your wishlist.");
 		return null;
 	}
 
-	//deletes the movie from the list
+	//deletes the movie from the list, O(n) runtime 
 	public Movie delete(int id){
 		Movie temp1 = head;
 		Movie temp2 = head;
@@ -170,11 +180,12 @@ public class WishList{
 	
 	//returns the first movie in the list
 	public Movie firstMovie(){
-		return head;
+			return head;
 	}
 
-	//prints the title and id of each of the movies in the list in the order they are in the list 
+	//prints the title and ID of each of the movies in the list in the order they are in the list 
 	public void printList(){
+		//if the list is empty
 		if (length == 0){
 			System.out.println("There are no movies in your wish list.");
 		}
