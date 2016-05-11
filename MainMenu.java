@@ -27,151 +27,39 @@ public class MainMenu implements java.io.Serializable{
 	public MainMenu(){
 	MainMenu aa = null;
 		
-		wishlist = new WishList();
+		//wishlist = new WishList();
 		moviesHash = new MovieHashTable_ID();
 		moviesHeap = new MovieTomatoScoreHeap();
 		moviesBST = new MovieReleaseDateBST();
-		moviesStack = new RecentlyWatchedStack();
+		//moviesStack = new RecentlyWatchedStack();
 		moviesDatabase = new MovieDatabase(moviesHash, moviesBST, moviesHeap);
 		customerDatabase = new CustomerDatabase();
-		
-		try{
-        	FileInputStream fileIn1 = new FileInputStream("WishList.ser");
-        	ObjectInputStream in = new ObjectInputStream(fileIn1);
-        	wishlist = (WishList) in.readObject();
-        	in.close();
-        	fileIn1.close();
-      	}
-      	catch(IOException i){
-        	i.printStackTrace();
-        	return;
-        }
-      	catch(ClassNotFoundException c){
-        	System.out.println("MainMenu class not found");
-        	c.printStackTrace();
-       		return;
-        }
 
-       	try{
-        	FileInputStream fileIn2 = new FileInputStream("MovieHashTable_ID.ser");
-        	ObjectInputStream in = new ObjectInputStream(fileIn2);
-        	moviesHash = (MovieHashTable_ID) in.readObject();
-        	in.close();
-        	fileIn2.close();
-      	}
-      	catch(IOException i){
-        	i.printStackTrace();
-        	return;
-        }
-      	catch(ClassNotFoundException c){
-        	System.out.println("MainMenu class not found");
-        	c.printStackTrace();
-       		return;
-        }
+		File bigFile = new File("NetflixData.ser");
+		if ((bigFile.exists()) && (!(bigFile.isDirectory()))){
+			try{
+	        	FileInputStream fileIn1 = new FileInputStream("NetflixData.ser");
+	        	ObjectInputStream in = new ObjectInputStream(fileIn1);
+	        	moviesHash = (MovieHashTable_ID) in.readObject();
+	        	moviesHeap = (MovieTomatoScoreHeap) in.readObject();
+	        	moviesBST = (MovieReleaseDateBST) in.readObject();
+	        	moviesDatabase = (MovieDatabase) in.readObject();
+	        	customerDatabase = (CustomerDatabase) in.readObject();
+	        	in.close();
+	        	fileIn1.close();
+	      	}
+	      	catch(IOException i){
+	        	i.printStackTrace();
+	        	return;
+	        }
+	      	catch(ClassNotFoundException c){
+	        	System.out.println("MainMenu class not found");
+	        	c.printStackTrace();
+	       		return;
+	        }
+	    }
 
-        try{
-        	FileInputStream fileIn3 = new FileInputStream("MovieTomatoScoreHeap.ser");
-        	ObjectInputStream in = new ObjectInputStream(fileIn3);
-        	moviesHeap = (MovieTomatoScoreHeap) in.readObject();
-        	in.close();
-        	fileIn3.close();
-      	}
-      	catch(IOException i){
-        	i.printStackTrace();
-        	return;
-        }
-      	catch(ClassNotFoundException c){
-        	System.out.println("MainMenu class not found");
-        	c.printStackTrace();
-       		return;
-        }
-
-        try{
-        	FileInputStream fileIn4 = new FileInputStream("MovieReleaseDateBST.ser");
-        	ObjectInputStream in = new ObjectInputStream(fileIn4);
-        	moviesBST = (MovieReleaseDateBST) in.readObject();
-        	in.close();
-        	fileIn4.close();
-      	}
-
-      	catch(IOException i){
-        	i.printStackTrace();
-        	return;
-        }
-      	catch(ClassNotFoundException c){
-        	System.out.println("MainMenu class not found");
-        	c.printStackTrace();
-       		return;
-        }
-		
-		try{
-        	FileInputStream fileIn4 = new FileInputStream("MovieReleaseDateBST.ser");
-        	ObjectInputStream in = new ObjectInputStream(fileIn4);
-        	moviesBST = (MovieReleaseDateBST) in.readObject();
-        	in.close();
-        	fileIn4.close();
-      	}
-
-      	catch(IOException i){
-        	i.printStackTrace();
-        	return;
-        }
-      	catch(ClassNotFoundException c){
-        	System.out.println("MainMenu class not found");
-        	c.printStackTrace();
-       		return;
-        }
-
-        try{
-        	FileInputStream fileIn5 = new FileInputStream("RecentlyWatchedStack.ser");
-        	ObjectInputStream in = new ObjectInputStream(fileIn5);
-        	moviesStack = (RecentlyWatchedStack) in.readObject();
-        	in.close();
-        	fileIn5.close();
-      	}
-      	catch(IOException i){
-        	i.printStackTrace();
-        	return;
-        }
-      	catch(ClassNotFoundException c){
-        	System.out.println("MainMenu class not found");
-        	c.printStackTrace();
-       		return;
-        }
-		
-		try{
-        	FileInputStream fileIn6 = new FileInputStream("MovieDatabase.ser");
-        	ObjectInputStream in = new ObjectInputStream(fileIn6);
-        	moviesDatabase = (MovieDatabase) in.readObject();
-        	in.close();
-        	fileIn6.close();
-      	}
-      	catch(IOException i){
-        	i.printStackTrace();
-        	return;
-        }
-      	catch(ClassNotFoundException c){
-        	System.out.println("MainMenu class not found");
-        	c.printStackTrace();
-       		return;
-        }
-
-        try{
-        	FileInputStream fileIn7 = new FileInputStream("CustomerDatabase.ser");
-        	ObjectInputStream in = new ObjectInputStream(fileIn7);
-        	customerDatabase = (CustomerDatabase) in.readObject();
-        	in.close();
-        	fileIn7.close();
-      	}
-      	catch(IOException i){
-        	i.printStackTrace();
-        	return;
-        }
-      	catch(ClassNotFoundException c){
-        	System.out.println("MainMenu class not found");
-        	c.printStackTrace();
-       		return;
-        }
+        /* ------------------------------------------------------- */
 
 		username = 0;
 		Boolean returningCust = false;
@@ -370,7 +258,11 @@ public class MainMenu implements java.io.Serializable{
 			FileOutputStream fileOut1 = 
 			new FileOutputStream("WishList.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut1);
-			out.writeObject(wishlist);
+			out.writeObject(moviesHash);
+			out.writeObject(moviesHeap);
+			out.writeObject(moviesBST);
+			out.writeObject(moviesDatabase);
+			out.writeObject(customerDatabase);
 			out.close();
 			fileOut1.close();
 			System.out.println("Serialized object successfully in wishlist.ser");
@@ -379,89 +271,6 @@ public class MainMenu implements java.io.Serializable{
 		catch(IOException i){
 			i.printStackTrace();
 		}
-		
-		try{
-			FileOutputStream fileOut2 = 
-			new FileOutputStream("MovieHashTable_ID.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut2);
-			out.writeObject(moviesHash);
-			out.close();
-			fileOut2.close();
-			System.out.println("Serialized object successfully in MoviesHashTable_ID.ser");
-
-		}
-		catch(IOException i){
-			i.printStackTrace();
-		}
-
-		try{
-			FileOutputStream fileOut3 = 
-			new FileOutputStream("MovieTomatoScoreHeap.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut3);
-			out.writeObject(moviesHeap);
-			out.close();
-			fileOut3.close();
-			System.out.println("Serialized object successfully in MovieTomatoScoreHeap.ser");
-
-		}
-		catch(IOException i){
-			i.printStackTrace();
-		}
-
-		try{
-			FileOutputStream fileOut4 = 
-			new FileOutputStream("MovieReleaseDateBST.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut4);
-			out.writeObject(moviesBST);
-			out.close();
-			fileOut4.close();
-			System.out.println("Serialized object successfully in MovieReleaseDateBST.ser");
-
-		}
-		catch(IOException i){
-			i.printStackTrace();
-		}
-
-		try{
-			FileOutputStream fileOut5 = 
-			new FileOutputStream("RecentlyWatchedStack.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut5);
-			out.writeObject(moviesStack);
-			out.close();
-			fileOut5.close();
-			System.out.println("Serialized object successfully in RecentlyWatchedStack.ser");
-
-		}
-		catch(IOException i){
-			i.printStackTrace();
-		}
-
-		try{
-			FileOutputStream fileOut6 = 
-			new FileOutputStream("MovieDatabase.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut6);
-			out.writeObject(moviesDatabase);
-			out.close();
-			fileOut6.close();
-			System.out.println("Serialized object successfully in MovieDatabase.ser");
-
-		}
-		catch(IOException i){
-			i.printStackTrace();
-		}
-
-		try{
-			FileOutputStream fileOut7 = 
-			new FileOutputStream("customerDatabase.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut7);
-			out.writeObject(customerDatabase);
-			out.close();
-			fileOut7.close();
-			System.out.println("Serialized object successfully in customerDatabase.ser");
-
-		}
-		catch(IOException i){
-			i.printStackTrace();
-		}
 	}	
 }
+
