@@ -145,22 +145,29 @@ public class MainMenu implements java.io.Serializable{
 				userInput9 = s.nextInt();
 
 				if (userInput9 == 1){ //play first movie of wishlist
-					Movie play = wishlist.firstMovie();
-					System.out.println("You are now about to 'watch': " + play.getTitle());
-					try{
-						Scanner e = new Scanner(System.in); //give them the option to delete after watching
-						System.out.println("Would you like to delete this movie from the wishlist after you've seen it? Yes or No");
-						String userInput5 = e.next().toLowerCase();
-						if (userInput5.equals("yes")){
-							wishlist.delete(wishlist.firstMovie().getID());
+					
+					if (! wishlist.wishListEmpty()){
+						Movie play = wishlist.firstMovie();
+						System.out.println("You are now about to 'watch': " + play.getTitle());
+					
+						try{
+							Scanner e = new Scanner(System.in); //give them the option to delete after watching
+							System.out.println("Would you like to delete this movie from the wishlist after you've seen it? Yes or No");
+							String userInput5 = e.next().toLowerCase();
+							if (userInput5.equals("yes")){
+								wishlist.delete(wishlist.firstMovie().getID());
+							}
+							else if (userInput5.equals("no")){
+								System.out.println("This movie will remain in your wish list.");;
+							}
 						}
-						else if (userInput5.equals("no")){
-							System.out.println("This movie will remain in your wish list.");;
+						catch(IllegalArgumentException k){
+							System.out.println("You did not enter one of the choices. Choose Again");
+							k.printStackTrace();
 						}
 					}
-					catch(IllegalArgumentException k){
-						System.out.println("You did not enter one of the choices. Choose Again");
-						k.printStackTrace();
+					else{
+						System.out.println("Sorry you have no movies in your wish list-try adding some!");
 					}
 				}
 				else if (userInput9 == 2){ //print wishlist
@@ -170,14 +177,25 @@ public class MainMenu implements java.io.Serializable{
 					Scanner n = new Scanner(System.in);
 					System.out.println("Enter the ID of the movie you would like to add:   ");
 					int userInput2 = n.nextInt();
-					Movie movie = moviesHash.lookUp(userInput2);
-					wishlist.addNewMovie(movie);
+					Movie movie = moviesHash.lookUp(userInput2); //returns movie node to be added
+					if (movie == null){
+						System.out.println("Sorry this movie isn't in our database.\n");
+					}
+					else{
+						wishlist.addNewMovie(movie);
+					}
 				}
 				else if (userInput9 == 4){ //delete movie from wishlist
 					Scanner d = new Scanner(System.in);
 					System.out.println("Enter the ID of the movie you would like to delete:    ");
 					int userInput3 = d.nextInt();
-					wishlist.delete(userInput3);
+					Movie movieDeleter = wishlist.search(userInput3); //returns movie node to be added
+					if (movieDeleter == null){
+						System.out.println("Sorry this movie isn't in your wish list.\n");
+					}
+					else{
+						wishlist.delete(userInput3);
+					}
 				}
 				else if (userInput9 == 5){ //print recently watched movies
 					moviesStack.printRecentlyWatchedStack();
@@ -191,3 +209,4 @@ public class MainMenu implements java.io.Serializable{
 		}
 	}	
 }
+
