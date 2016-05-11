@@ -112,17 +112,21 @@ public class MainMenu implements java.io.Serializable{
 			Scanner o = new Scanner(System.in);
 			if (username == 2){
 				customerDatabase.addCustomer();
-				System.out.println("Enter the  last four digits of your CCN to begin!   ");
+				System.out.println(customerDatabase.findCustomer(1234)); //TEST
+				System.out.println("\nHello! Enter the  last four digits of your CCN to begin!   ");
 				username = o.nextInt();
+				while (!customerDatabase.hasCustomer(username)){
+					System.out.println("Sorry! We dont have that CCN in our system, please try again:\n");
+					username = o.nextInt();
+				}
 			}
+
 			Scanner a = new Scanner(System.in);
 			System.out.print("Password:  ");
 			password = a.next();
-			System.out.println("password printed" + password);
+			System.out.println("password printed: " + password); //TEST PRINT
 
-			customerDatabase.printCustomers(); // TEST check to see if they exist in the database
-
-			while ((customerDatabase.passwordMatch(username, password)) == false){
+			while ((customerDatabase.passwordMatch(username, password)) != true){
 				System.out.println("Nice try... You're password is wrong. Why don't you enter a different password.");
 				System.out.print("Password:  ");
 				password = o.next();
@@ -134,9 +138,9 @@ public class MainMenu implements java.io.Serializable{
 			System.out.println("\nWelcome Customer!\n");
 			
 			int userInput9 = 0;
-			while (userInput9 != 6){
+			while (userInput9 != 7){
 				Scanner s = new Scanner(System.in);
-				System.out.println("What would you like to do today? Choose and option (1-6) and press enter.\n1. Play a Movie\n2. See movies in your wish list\n3. Add a new movie to your wish list\n4. Delete a movie from your wishlist\n5. View your recently watched movies\n6. Quit\n");
+				System.out.println("What would you like to do today? Choose and option (1-6) and press enter.\n1. Play a Movie\n2. See movies in your wish list\n3. Add a new movie to your wish list\n4. Delete a movie from your wishlist\n5. View your recently watched movies\n6. View all availabvle movies\n7. Quit\n");
 				System.out.print("Option: ");
 				userInput9 = s.nextInt();
 
@@ -178,7 +182,11 @@ public class MainMenu implements java.io.Serializable{
 				else if (userInput9 == 5){ //print recently watched movies
 					moviesStack.printRecentlyWatchedStack();
 				}
-				//6 quits the program, anything else prompts within options while loop
+				else if (userInput9 == 6){ //prints all avaliable movies
+					System.out.println("The folowing movies are available for viewing in the database:\n");
+					moviesBST.traverseMovieTree();
+				}
+				//7 quits the program, anything else prompts within options while loop
 			}
 		}
 	}	
