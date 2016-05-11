@@ -218,8 +218,18 @@ public class CustomerDatabase implements java.io.Serializable{
 	*/
 
 	public boolean passwordMatch(int last4Digits, String password0){
+
 		Customer thisCustomer = findCustomer(last4Digits);
+		String checkPass = thisCustomer.getPassword();
+
+		return password0.equals(checkPass);
+
+	}
+
+	/*
+
 		if (hasCustomer(last4Digits)){
+			Customer thisCustomer = findCustomer(last4Digits);
 			return (thisCustomer.getPassword() == password0);
 		}
 		else{
@@ -227,7 +237,7 @@ public class CustomerDatabase implements java.io.Serializable{
 		}
 	}
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		CustomerDatabase myCs = new CustomerDatabase();
 		myCs.addCustomer();
 		myCs.addCustomer();
@@ -241,6 +251,3 @@ public class CustomerDatabase implements java.io.Serializable{
 	*/
 
 }
-
-
-
