@@ -4,8 +4,9 @@
 -admins have options to acess and edit the movie database
 */
 
-import java.io.*;
 import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class MainMenu implements java.io.Serializable{
 
@@ -36,17 +37,30 @@ public class MainMenu implements java.io.Serializable{
 			*/
 		username = 0;
 		Boolean returningCust = false;
+		Scanner f = new Scanner(System.in);
 		//System.out.println("Test before while loop");
-		while ((username != 1) && (username != 2) && ((returningCust == false))){
-			Scanner f = new Scanner(System.in);
-			System.out.println("\n-----------Welcome to NetFlix!-----------\nPlease Login Below\nAdmins press 1 and Returning Customers enter last 4-digits of your CCN, and new Customers please press 2.");
-			System.out.print("Login: ");
-			username = f.nextInt();
-			returningCust = customerDatabase.hasCustomer(username);
-			if ((username != 1) && (username != 2) && ((returningCust == false))){
-				System.out.println("\nPlease try again, that wasn't an option!\n");
+
+		while(true){
+			try{
+
+				while ((username != 1) && (username != 2) && ((returningCust == false))){
+					System.out.println("\n-----------Welcome to NetFlix!-----------\nPlease Login Below\nAdmins press 1 and Returning Customers enter last 4-digits of your CCN, and new Customers please press 2.");
+					System.out.print("Login: ");
+					username = f.nextInt();
+					returningCust = customerDatabase.hasCustomer(username);
+					if ((username != 1) && (username != 2) && ((returningCust == false))){
+						System.out.println("\nPlease try again, that wasn't an option!\n");
+					}
+				}
+				break;
+			}
+			catch (InputMismatchException really){
+				System.out.print("Your choice is not valid. Please input your login as instructed: ");
+				f.next();
+				continue;
 			}
 		}
+
 		if (username == 1){
 			password = "";
 			while (!(password.equals(passwordA))){
@@ -60,51 +74,59 @@ public class MainMenu implements java.io.Serializable{
 			if (password.equals(passwordA)){
 				System.out.println("\nWelcome Admin!\n");
 				int adminInput = 0;
-				while (adminInput != 4){
+				Scanner t = new Scanner(System.in);
+				while(true){
 					try{
-						Scanner t = new Scanner(System.in);
-						System.out.println("Please select an option from the list below (1-4) then press enter:\n1. Add a movie to the database.\n2. View least-rated movie in the database.\n3. View all movies in database(by order of release date).\n4. Pick this option to quit.\n");
-						System.out.print("Option: ");
-						adminInput = t.nextInt();
+	
+						while (adminInput != 4){
+							
+								
+								System.out.println("Please select an option from the list below (1-4) then press enter:\n1. Add a movie to the database.\n2. View least-rated movie in the database.\n3. View all movies in database(by order of release date).\n4. Pick this option to quit.\n");
+								System.out.print("Option: ");
+								adminInput = t.nextInt();
 
-						if (adminInput == 1){ //add movie to the database
-							moviesDatabase.centralAdd(); //central add makes sure it changes in all of the data structures 
-						}
-						else if (adminInput == 2){ //view least rated movie in the database
-							Movie temp = moviesHeap.findLeastRatedMovie();
-							if (temp == null){
-								System.out.println("\nSorry there are no movies in the database\n");
-							}
-							else{
-								System.out.println("The least rated movie is:   ");
-								System.out.println(temp.getTitle());
+								if (adminInput == 1){ //add movie to the database
+									moviesDatabase.centralAdd(); //central add makes sure it changes in all of the data structures 
+								}
+								else if (adminInput == 2){ //view least rated movie in the database
+									Movie temp = moviesHeap.findLeastRatedMovie();
+									if (temp == null){
+										System.out.println("\nSorry there are no movies in the database\n");
+									}
+									else{
+										System.out.println("The least rated movie is:   ");
+										System.out.println(temp.getTitle());
 
-								String answer = "";
-								while (!(answer.equals("yes")) && !(answer.equals("no"))){
-									Scanner l = new Scanner(System.in); //give option to delete the least rated move
-									System.out.println("Would you like to delete this movie from the database? Yes or No. ");
-									answer = l.next().toLowerCase();
-									if (!(answer.equals("yes")) && !(answer.equals("no"))){
-										System.out.println("That was neither 'yes' or 'no', why dont you try again...\n");
+										String answer = "";
+										while (!(answer.equals("yes")) && !(answer.equals("no"))){
+											Scanner l = new Scanner(System.in); //give option to delete the least rated move
+											System.out.println("Would you like to delete this movie from the database? Yes or No. ");
+											answer = l.next().toLowerCase();
+											if (!(answer.equals("yes")) && !(answer.equals("no"))){
+												System.out.println("That was neither 'yes' or 'no', why dont you try again...\n");
+											}
+										}
+										if (answer.equals("yes")){
+											moviesDatabase.centralDelete();
+										}
+										else if (answer.equals("no")){
+											System.out.println("This movie will remain in the database.\n");
+										}
 									}
 								}
-								if (answer.equals("yes")){
-									moviesDatabase.centralDelete();
-								}
-								else if (answer.equals("no")){
-									System.out.println("This movie will remain in the database.\n");
+								else if (adminInput == 3){ //view all movies in the database
+									System.out.println("The folowing movies are available for viewing in the database:\n");
+									moviesBST.traverseMovieTree();
 								}
 							}
+							break;
 						}
-						else if (adminInput == 3){ //view all movies in the database
-							System.out.println("The folowing movies are available for viewing in the database:\n");
-							moviesBST.traverseMovieTree();
-						}
-					}
-					catch(IllegalArgumentException z){
+
+					catch(InputMismatchException z){
 						System.out.println("You did not enter one of the choices. Choose Again");
-						z.printStackTrace(); 
-					}
+						t.next(); 
+						continue;
+					}	
 				}	
 			}
 		}
@@ -209,4 +231,3 @@ public class MainMenu implements java.io.Serializable{
 		}
 	}	
 }
-
