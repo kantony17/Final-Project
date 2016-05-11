@@ -17,8 +17,8 @@ public class Movie implements java.io.Serializable{
 	//instance variables
 	private String title;
 	private int releaseDate;
-	private static int id = 10000;
 	private int tomatoScore;
+	private int id;
 	private boolean haveMovie;
 	private Movie nextM;
 	private Movie rightM;
@@ -26,11 +26,11 @@ public class Movie implements java.io.Serializable{
 	private Movie rootM;
 
 	//incoming variables can't have the same names as instance variables
-	public Movie(String title0, int releaseDate0, int id0, int tomatoScore0, boolean haveMovie0, Movie nextM0, Movie rightM0, Movie leftM0, Movie rootM0){
+	public Movie(String title0, int releaseDate0, int tomatoScore0, int id0, boolean haveMovie0, Movie nextM0, Movie rightM0, Movie leftM0, Movie rootM0){
 		title = title0;
 		releaseDate = releaseDate0;
-		id = id0;
 		tomatoScore = tomatoScore0;
+		id = id0;
 		haveMovie = haveMovie0;
 		nextM = nextM0;
 		rightM = rightM0;
@@ -39,12 +39,12 @@ public class Movie implements java.io.Serializable{
 	}
 
 	//assume movie is in the library unless otherwise specified, set pointer to null
-	public Movie(String title, int releaseDate, int id, int tomatoScore){
+	public Movie(String title, int releaseDate, int tomatoScore, int id){
 		this.title = title;
 		this.releaseDate = releaseDate;
-		//each time a movie is added, its item increases by 1
-		id++;
 		this.tomatoScore = tomatoScore;
+		//each time a movie is added, its item increases by 1
+		this.id = id; 
 		haveMovie = true;
 		nextM = null;
 		rightM = null;

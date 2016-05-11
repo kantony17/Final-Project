@@ -208,8 +208,12 @@ public class MovieReleaseDateBST implements java.io.Serializable{
 
 		//0 children, set the parent to point to null
 		if (temp.getLeftM() == null && temp.getRightM() == null){
-			parent.setLeftM(null);
-			parent.setRightM(null);
+			if (parent.getLeftM() == temp){
+				parent.setLeftM(null);
+			}
+			else{
+				parent.setRightM(null);
+			}
 		}
 
 		//1 child, set the child of x to be the left or right child of the parent of x
@@ -311,7 +315,7 @@ public class MovieReleaseDateBST implements java.io.Serializable{
 
 	//call traverse2 with root
 	public void traverseMovieTree(){
-		System.out.println("Release Date    Title");
+		System.out.println("ID Number   Release Date    Title");
 		traverseMovieTree2(rootM);
 		System.out.println();
 	}
@@ -320,7 +324,7 @@ public class MovieReleaseDateBST implements java.io.Serializable{
 	private void traverseMovieTree2(Movie x){
 		if (x != null){
 			traverseMovieTree2(x.getLeftM());
-			System.out.println(x.getRelease() + "\t" + x.getTitle());
+			System.out.println(x.getID() + "\t\t" + x.getRelease() + "\t" + x.getTitle());
 			traverseMovieTree2(x.getRightM());
 		}
 	}

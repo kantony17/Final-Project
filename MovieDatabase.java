@@ -1,4 +1,4 @@
-//movieDatabase.java
+//MovieDatabase.java
 
 
 
@@ -18,6 +18,8 @@ public class MovieDatabase implements java.io.Serializable{
 	private MovieTomatoScoreHeap moviesHeap;
 
 	private int numMovies;
+
+	private int idNumber = 10000;
 
 	public MovieDatabase(MovieHashTable_ID moviesHash0, MovieReleaseDateBST moviesBST0, MovieTomatoScoreHeap moviesHeap0){
 
@@ -99,7 +101,7 @@ public class MovieDatabase implements java.io.Serializable{
 		System.out.println();
 
 
-		int id = numMovies + 10000;
+		//int id = numMovies + 10000;
 
 		System.out.print("Rotten Tomato's Score (0-100): ");
 		int tomatoScore = 0;
@@ -121,10 +123,12 @@ public class MovieDatabase implements java.io.Serializable{
 
 			}
 		}
+		int movieID = idNumber;
+		idNumber++;
 
 		System.out.println("\n----------------------------------");
 
-		Movie myMovie = new Movie(title, releaseDate, id, tomatoScore);
+		Movie myMovie = new Movie(title, releaseDate, tomatoScore, movieID);
 
 		return myMovie;
 
@@ -132,19 +136,23 @@ public class MovieDatabase implements java.io.Serializable{
 
 	public void centralDelete(){
 		Movie outMovie = moviesHeap.findLeastRatedMovie();
+
+
 		moviesHash.delete(outMovie.getID());
 		moviesBST.deleteMovie(outMovie);
+
 		moviesHeap.deleteLeastRatedMovie();
+
 		numMovies--;
-		System.out.println("\n" + outMovie.getTitle() + " has been removed from the database");
+
+
+		System.out.println(outMovie.getTitle() + " has been removed from the database");
+
 
 		if (numMovies > 1){
-			System.out.println("The database now has " + numMovies + " movies.\n"); 
+			System.out.println("The database now has " + numMovies + " movies."); 
 		}
-		else if (numMovies <= 0){
-			System.out.println("The database now has 0 movies.\n");
-		}
-		else if (numMovies == 1){
+		else{
 			System.out.println("The database now has 1 movie.\n");
 		}
 
@@ -152,10 +160,11 @@ public class MovieDatabase implements java.io.Serializable{
 	
 
 	/*public static void main(String[] args){
-		movieDatabase myMovies = new movieDatabase();
+		MovieDatabase myMovies = new MovieDatabase();
 		myMovies.centralAdd();
 		myMovies.centralAdd();
 		myMovies.centralDelete();
+
 	}*/
 
 

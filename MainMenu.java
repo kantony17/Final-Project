@@ -15,7 +15,7 @@ public class MainMenu implements java.io.Serializable{
 	private String passwordC = "netflixCust";
 	private int username;
 	private String password;
-	WishList wishlist = new WishList();
+	//WishList wishlist = new WishList();
 	MovieHashTable_ID moviesHash;
 	MovieTomatoScoreHeap moviesHeap;
 	MovieReleaseDateBST moviesBST;
@@ -35,11 +35,12 @@ public class MainMenu implements java.io.Serializable{
 		moviesDatabase = new MovieDatabase(moviesHash, moviesBST, moviesHeap);
 		customerDatabase = new CustomerDatabase();
 
-		File bigFile = new File("NetflixData.ser");
+		File bigFile = new File("Data.ser");
 		if ((bigFile.exists()) && (!(bigFile.isDirectory()))){
 			try{
-	        	FileInputStream fileIn1 = new FileInputStream("NetflixData.ser");
+	        	FileInputStream fileIn1 = new FileInputStream("Data.ser");
 	        	ObjectInputStream in = new ObjectInputStream(fileIn1);
+	        	//wishlist = (WishList) in.readObject();
 	        	moviesHash = (MovieHashTable_ID) in.readObject();
 	        	moviesHeap = (MovieTomatoScoreHeap) in.readObject();
 	        	moviesBST = (MovieReleaseDateBST) in.readObject();
@@ -69,7 +70,7 @@ public class MainMenu implements java.io.Serializable{
 			try{
 
 				while ((username != 1) && (username != 2) && ((returningCust == false))){
-					System.out.println("\n-----------Welcome to NetFlix!-----------\nPlease Login Below\nAdmins press 1 and Returning Customers enter last 4-digits of your CCN, and new Customers please press 2.");
+					System.out.println("\n-----------Welcome to NetFlix!-----------\nPlease Choose an option below\n1. Admins\n2. New Customers\nReturning Customers Enter your Username");
 					System.out.print("Login: ");
 					username = f.nextInt();
 					returningCust = customerDatabase.hasCustomer(username);
@@ -148,7 +149,7 @@ public class MainMenu implements java.io.Serializable{
 						}
 
 					catch(InputMismatchException z){
-						System.out.println("You did not enter one of the choices. Choose Again");
+						System.out.println("\nYou did not enter one of the choices. Choose Again\n");
 						t.next(); 
 						continue;
 					}	
@@ -159,7 +160,6 @@ public class MainMenu implements java.io.Serializable{
 			Scanner o = new Scanner(System.in);
 			if (username == 2){
 				customerDatabase.addCustomer();
-				System.out.println(customerDatabase.findCustomer(1234)); //TEST
 				System.out.println("\nHello! Enter the  last four digits of your CCN to begin!   ");
 				username = o.nextInt();
 				while (!customerDatabase.hasCustomer(username)){
@@ -193,32 +193,32 @@ public class MainMenu implements java.io.Serializable{
 
 				if (userInput9 == 1){ //play first movie of wishlist
 					
-					if (! wishlist.wishListEmpty()){
-						Movie play = wishlist.firstMovie();
+					if (! customerDatabase.findCustomerWishList(username).wishListEmpty()){
+						Movie play = customerDatabase.findCustomerWishList(username).firstMovie();
 						System.out.println("You are now about to 'watch': " + play.getTitle());
 					
 						try{
 							Scanner e = new Scanner(System.in); //give them the option to delete after watching
-							System.out.println("Would you like to delete this movie from the wishlist after you've seen it? Yes or No");
+							System.out.println("\nWould you like to delete this movie from the wishlist after you've seen it? Yes or No");
 							String userInput5 = e.next().toLowerCase();
 							if (userInput5.equals("yes")){
-								wishlist.delete(wishlist.firstMovie().getID());
+								customerDatabase.findCustomerWishList(username).delete(customerDatabase.findCustomerWishList(username).firstMovie().getID());
 							}
 							else if (userInput5.equals("no")){
 								System.out.println("This movie will remain in your wish list.");;
 							}
 						}
 						catch(IllegalArgumentException k){
-							System.out.println("You did not enter one of the choices. Choose Again");
+							System.out.println("\nYou did not enter one of the choices. Choose Again\n");
 							k.printStackTrace();
 						}
 					}
 					else{
-						System.out.println("Sorry you have no movies in your wish list-try adding some!");
+						System.out.println("\nSorry you have no movies in your wish list-try adding some!\n");
 					}
 				}
 				else if (userInput9 == 2){ //print wishlist
-					wishlist.printList();
+					customerDatabase.findCustomerWishList(username).printList();
 				}
 				else if (userInput9 == 3){ //add movie to wishlist
 					Scanner n = new Scanner(System.in);
@@ -226,22 +226,22 @@ public class MainMenu implements java.io.Serializable{
 					int userInput2 = n.nextInt();
 					Movie movie = moviesHash.lookUp(userInput2); //returns movie node to be added
 					if (movie == null){
-						System.out.println("Sorry this movie isn't in our database.\n");
+						System.out.println("\nSorry this movie isn't in our database.\n");
 					}
 					else{
-						wishlist.addNewMovie(movie);
+						customerDatabase.findCustomerWishList(username).addNewMovie(movie);
 					}
 				}
 				else if (userInput9 == 4){ //delete movie from wishlist
 					Scanner d = new Scanner(System.in);
 					System.out.println("Enter the ID of the movie you would like to delete:    ");
 					int userInput3 = d.nextInt();
-					Movie movieDeleter = wishlist.search(userInput3); //returns movie node to be added
+					Movie movieDeleter = customerDatabase.findCustomerWishList(username).search(userInput3); //returns movie node to be added
 					if (movieDeleter == null){
-						System.out.println("Sorry this movie isn't in your wish list.\n");
+						System.out.println("\nSorry this movie isn't in your wish list.\n");
 					}
 					else{
-						wishlist.delete(userInput3);
+						customerDatabase.findCustomerWishList(username).delete(userInput3);
 					}
 				}
 				else if (userInput9 == 5){ //print recently watched movies
@@ -256,8 +256,9 @@ public class MainMenu implements java.io.Serializable{
 		}
 		try{
 			FileOutputStream fileOut1 = 
-			new FileOutputStream("WishList.ser");
+			new FileOutputStream("Data.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut1);
+			//out.writeObject(wishlist);
 			out.writeObject(moviesHash);
 			out.writeObject(moviesHeap);
 			out.writeObject(moviesBST);
@@ -265,9 +266,9 @@ public class MainMenu implements java.io.Serializable{
 			out.writeObject(customerDatabase);
 			out.close();
 			fileOut1.close();
-			System.out.println("Serialized object successfully in wishlist.ser");
-
+			System.out.println("Serialized object successfully in Data.ser");
 		}
+		
 		catch(IOException i){
 			i.printStackTrace();
 		}

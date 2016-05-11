@@ -44,6 +44,22 @@ public class CustomerDatabase implements java.io.Serializable{
 		return customerList[check];
 	}
 
+
+	public WishList findCustomerWishList(int IDNum){
+		int counter = 0;
+		int check = hash1(IDNum);
+
+		while ((customerList[check] == null) || (customerList[check].getKey() != IDNum)){
+			check = hash2(check,IDNum);
+			counter++;
+			if (counter > maxCustomers){
+				return null;
+			}
+		}
+		return customerList[check].getWishList();
+
+	}
+
 	public void delete(int IDNum){
 		int counter = 0;
 		int check = hash1(IDNum);
