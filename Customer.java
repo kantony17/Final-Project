@@ -1,6 +1,5 @@
 //Cnode.java
 
-
 public class Customer implements java.io.Serializable{ 
 
 	private String name;
@@ -18,13 +17,12 @@ public class Customer implements java.io.Serializable{
 		email = email0;
 		CCN = CCN0;
 
-		key = Integer.parseInt(CCN.substring(12,16));
+		key = Integer.parseInt(CCN.substring(12));
 
-		key = key%1000;
+		//key = key%1000;
 		next = null;
 		password = password0;
 		wishList = new WishList();
-
 	}
 
 	public String getName(){
@@ -59,8 +57,4 @@ public class Customer implements java.io.Serializable{
 	public String getPassword(){
 		return password;
 	}
-
 }
-
-
-
