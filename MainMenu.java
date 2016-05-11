@@ -187,7 +187,7 @@ public class MainMenu implements java.io.Serializable{
 			int userInput9 = 0;
 			while (userInput9 != 7){
 				Scanner s = new Scanner(System.in);
-				System.out.println("What would you like to do today? Choose and option (1-6) and press enter.\n1. Play a Movie\n2. See movies in your wish list\n3. Add a new movie to your wish list\n4. Delete a movie from your wishlist\n5. View your recently watched movies\n6. View all availabvle movies\n7. Quit\n");
+				System.out.println("What would you like to do today? Choose and option (1-6) and press enter.\n1. Play a Movie\n2. See movies in your wish list\n3. Add a new movie to your wish list\n4. Delete a movie from your wishlist\n5. View your recently watched movies\n6. View all available movies\n7. Quit\n");
 				System.out.print("Option: ");
 				userInput9 = s.nextInt();
 
