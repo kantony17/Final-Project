@@ -19,6 +19,10 @@ public class WishList implements java.io.Serializable{
 		length = 0;
 	}
 
+	public boolean wishListEmpty(){
+		return length == 0;
+	}
+
 	//add new movie in any location, O(n) runtime
 	public void addNewMovie(Movie movie){
 		//wishlist can only hold up to 20 movies at a time
@@ -154,7 +158,6 @@ public class WishList implements java.io.Serializable{
 			}
 			temp = temp.getNextM();
 		}
-		System.out.println("Sorry that movie is not in your wishlist.");
 		return null;
 	}
 
@@ -202,3 +205,4 @@ public class WishList implements java.io.Serializable{
 		}
 	}
 }
+
