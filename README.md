@@ -14,5 +14,9 @@ credit card number, and create a password to login in the future.
 Test this code by running the main function, NetFlix.java. 
 This file calls on MainMenu.java which depending on user input accesses the other data structures in the file. 
 
+# Files:
+#####Customer.java
+This file is the specific customer node
+
 # Contributors:
 Sarah Carley '18, Kaavya Antony '19, Alex Klavans '17, and Andrew Stutzman '17 of Connecticut College
