@@ -14,9 +14,8 @@ credit card number, and create a password to login in the future.
 Test this code by running the main function, NetFlix.java. 
 This file calls on MainMenu.java which depending on user input accesses the other data structures in the file. 
 
-# Files and Data Structures:
+## Files and Data Structures:
 The following are the files and subsequent data strucutres used in order to run the main method NetFlix.java. All classes are serializable. 
-
 #####Customer.java
 This file is the specific customer node. It can set and return a customers name, credit card number and the password that they create. Each customer is created as their own node.  
 #####Movie.java
@@ -35,7 +34,7 @@ This file contains a binary search tree data structure that is used to store the
 Each movie is given a rotten tomato rating score, and in this file and heap data structure orders the movie nodes from the main movie database in order of the lowest rated movie. When the admin views the least rated movie, they are given the option to delete it, which deletes the root of the head and then rebalances the tree. This is the only way that movies can be deleted from the movie database. 
 #####RecentlyWatchedStack.java
 This file keeps track of customers most recently watched movies, by using a stack in an array. Each time a user acesses ('plays') their first movie it is pushed onto this stack. That way the most recently watched movie is at the top. Even if a user doesn't delete the movie from their wish list it will still be added to the stack. 
-
-
+#####UserManual.pdf
+This is just a pdf file that contains instructions for a user, it walks through the interface but leaves out the code behind the process. 
 ## Contributors:
 Sarah Carley '18, Kaavya Antony '19, Alex Klavans '19, and Andrew Stutzman '17 of Connecticut College
