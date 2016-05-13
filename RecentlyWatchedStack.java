@@ -1,9 +1,4 @@
-/*
-Andrew Stutzman
-5-4-16
-RecentlyWatchStack
-
-This program creates a Stack in an array that allows a user to use the following functions:
+/*This program creates a Stack in an array that allows a user to use the following functions:
 -Create an empty stack
 -Check if the stack is empty
 -Return the most recently watched movie (top)
