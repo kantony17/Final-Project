@@ -186,22 +186,26 @@ public class MainMenu implements java.io.Serializable{
 					
 					if (! customerDatabase.findCustomerWishList(username).wishListEmpty()){
 						Movie play = customerDatabase.findCustomerWishList(username).firstMovie();
-						System.out.println("You are now about to 'watch': " + play.getTitle());
-					
-						try{
-							Scanner e = new Scanner(System.in); //give them the option to delete after watching
-							System.out.println("\nWould you like to delete this movie from the wishlist after you've seen it? Yes or No");
-							String userInput5 = e.next().toLowerCase();
-							if (userInput5.equals("yes")){ //user customer database to find the user with the given username, then delete from that wishlist
-								customerDatabase.findCustomerWishList(username).delete(customerDatabase.findCustomerWishList(username).firstMovie().getID());
+						if (play.haveMovie() == true){
+							System.out.println("You are now about to 'watch': " + play.getTitle());
+							try{
+								Scanner e = new Scanner(System.in); //give them the option to delete after watching
+								System.out.println("\nWould you like to delete this movie from the wishlist after you've seen it? Yes or No");
+								String userInput5 = e.next().toLowerCase();
+								if (userInput5.equals("yes")){ //user customer database to find the user with the given username, then delete from that wishlist
+									customerDatabase.findCustomerWishList(username).delete(customerDatabase.findCustomerWishList(username).firstMovie().getID());
+								}
+								else if (userInput5.equals("no")){
+									System.out.println("This movie will remain in your wish list.");
+								}
 							}
-							else if (userInput5.equals("no")){
-								System.out.println("This movie will remain in your wish list.");;
+							catch(IllegalArgumentException k){
+								System.out.println("\nYou did not enter one of the choices. Choose Again\n");
+								k.printStackTrace();
 							}
 						}
-						catch(IllegalArgumentException k){
-							System.out.println("\nYou did not enter one of the choices. Choose Again\n");
-							k.printStackTrace();
+						else{
+							System.out.println("Sorry that movie is no longer in stock.");
 						}
 					}
 					else{
@@ -209,7 +213,9 @@ public class MainMenu implements java.io.Serializable{
 					}
 				}
 				else if (userInput9 == 2){ //print wishlist
+					System.out.println();
 					customerDatabase.findCustomerWishList(username).printList(); //use cusotmer databse to find the customer then print that specific wishlist
+					System.out.println();
 				}
 				else if (userInput9 == 3){ //add movie to wishlist
 					Scanner n = new Scanner(System.in);
