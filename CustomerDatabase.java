@@ -1,26 +1,31 @@
-//customerDatabase.java
+//CustomerDatabase.java
+
+//CustomerDatabase class is a hash table database for all customers in the system 
 import java.util.Scanner;
 import java.io.*;
 import java.util.*;
 
 public class CustomerDatabase implements java.io.Serializable{
 
-	private int numCustomers;
-	private Customer[] customerList;
-	private int maxCustomers;
+	private int numCustomers; //number of customers in the system
+	private Customer[] customerList; //array of custoers
+	private int maxCustomers; //max customers or size of array
 
 
+	//constructor takes no paramters, establishes an array of 97 customers
 	public CustomerDatabase(){
 		customerList = new Customer[97];
 		maxCustomers = 97;
 
 	}
 
+	//returns true if no customers, false if 1 or more
 	public boolean areNoCustomers(){
 		return numCustomers == 0;
 	}
 
 
+	//hash 1 function returns index
 	public int hash1(int IDNum){
 		return (IDNum%97);
 	}
@@ -30,6 +35,8 @@ public class CustomerDatabase implements java.io.Serializable{
 
 
 	}
+	
+	//returns Customer node after finding it by ID number
 	public Customer findCustomer(int IDNum){
 		int counter = 0;
 		int check = hash1(IDNum);
@@ -44,7 +51,7 @@ public class CustomerDatabase implements java.io.Serializable{
 		return customerList[check];
 	}
 
-
+	//Returns A customers wishlist
 	public WishList findCustomerWishList(int IDNum){
 		int counter = 0;
 		int check = hash1(IDNum);
@@ -61,10 +68,10 @@ public class CustomerDatabase implements java.io.Serializable{
 
 	}
 
+	//returns the stack of recently watched movies
 	public RecentlyWatchedStack findRecentlyWatchedStack(int IDNum){
 		int counter = 0;
 		int check = hash1(IDNum);
-
 
 		while ((customerList[check] == null) || (customerList[check].getKey() != IDNum)){
 			check = hash2(check,IDNum);
@@ -77,18 +84,8 @@ public class CustomerDatabase implements java.io.Serializable{
 
 	}
 
-	public void delete(int IDNum){
-		int counter = 0;
-		int check = hash1(IDNum);
-		while ((customerList[check] == null) || (customerList[check].getKey() != IDNum)){
-			check = hash2(check,IDNum);
-		}
 
-		customerList[check] = null;
-		numCustomers--;
-
-	}
-
+	//adds customer. Calls make customer to create this customer
 	public void addCustomer(){
 		Customer newCustomer = makeCustomer();
 
@@ -111,6 +108,7 @@ public class CustomerDatabase implements java.io.Serializable{
 	}
 
 
+	//make customer takes user input for name, email, ccn and password
 	private Customer makeCustomer(){
 		System.out.println("\n--------Customer Adding Portal--------");
 		System.out.println("*Please enter your information*\n");
@@ -182,6 +180,7 @@ public class CustomerDatabase implements java.io.Serializable{
 	}
 
 
+	//returns true if the customer with this key exists in the system, false if not
 	public boolean hasCustomer(int last4Digits){
 		Customer thisCustomer = findCustomer(last4Digits);
 		if (thisCustomer != null){
@@ -192,7 +191,7 @@ public class CustomerDatabase implements java.io.Serializable{
 		}
 	}
 
-
+	//returns true if the paramter password matches with the password attached to the node with this key
 	public boolean passwordMatch(int last4Digits, String password0){
 
 		Customer thisCustomer = findCustomer(last4Digits);
