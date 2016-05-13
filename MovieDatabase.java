@@ -19,6 +19,8 @@ public class MovieDatabase implements java.io.Serializable{
 
 	private int numMovies;
 
+	private int idCounter;
+
 	public MovieDatabase(MovieHashTable_ID moviesHash0, MovieReleaseDateBST moviesBST0, MovieTomatoScoreHeap moviesHeap0){
 
 		moviesHash = moviesHash0;
@@ -26,6 +28,8 @@ public class MovieDatabase implements java.io.Serializable{
 		moviesHeap = moviesHeap0;
 
 		numMovies = 0; 
+
+		idCounter = 10000;
 	}
 
 	//Adds movie to hash table, BST, and Heap
@@ -99,7 +103,7 @@ public class MovieDatabase implements java.io.Serializable{
 		System.out.println();
 
 
-		int id = numMovies + 10000;
+		int id = idCounter++;
 
 		System.out.print("Rotten Tomato's Score (0-100): ");
 		int tomatoScore = 0;
