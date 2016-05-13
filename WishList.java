@@ -22,7 +22,7 @@ public class WishList implements java.io.Serializable{
 	}
 
 	//returns boolean, whether the array is empty or not
-	public boolean isEmpty(){
+	public boolean wishListEmpty(){
 		return length == 0;
 	}
 
@@ -34,7 +34,7 @@ public class WishList implements java.io.Serializable{
 			while (!(userInput.equals("A") || userInput.equals("B") || userInput.equals("C"))){
 				Scanner s = new Scanner(System.in);
 				System.out.println("Where would you like this movie to be added? \n A. Front \n B. End \n C. Other");
-				userInput = s.next();
+				userInput = s.next().toUpperCase();
 				if (!(userInput.equals("A") || userInput.equals("B") || userInput.equals("C"))){
 					System.out.println("Sorry that is not one of the options. Try again. ");
 				}
@@ -134,7 +134,7 @@ public class WishList implements java.io.Serializable{
 
 	//returns the first movie in the list
 	public Movie firstMovie(){
-		if (isEmpty()){
+		if (wishListEmpty()){
 			return null;
 		}
 		else{
@@ -159,4 +159,3 @@ public class WishList implements java.io.Serializable{
     		}
 	 }
 }
-
