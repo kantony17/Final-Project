@@ -101,6 +101,7 @@ public class WishList implements java.io.Serializable{
 				}
 			}
 		}
+		//if the wishlist is full
 		else{
 			System.out.println("Sorry, your wishlist is full.");
 		}
