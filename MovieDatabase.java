@@ -1,4 +1,4 @@
-//MovieDatabase.java
+//movieDatabase.java
 
 
 
@@ -18,8 +18,6 @@ public class MovieDatabase implements java.io.Serializable{
 	private MovieTomatoScoreHeap moviesHeap;
 
 	private int numMovies;
-
-	private int idNumber = 10000;
 
 	public MovieDatabase(MovieHashTable_ID moviesHash0, MovieReleaseDateBST moviesBST0, MovieTomatoScoreHeap moviesHeap0){
 
@@ -101,7 +99,7 @@ public class MovieDatabase implements java.io.Serializable{
 		System.out.println();
 
 
-		//int id = numMovies + 10000;
+		int id = numMovies + 10000;
 
 		System.out.print("Rotten Tomato's Score (0-100): ");
 		int tomatoScore = 0;
@@ -123,12 +121,10 @@ public class MovieDatabase implements java.io.Serializable{
 
 			}
 		}
-		int movieID = idNumber;
-		idNumber++;
 
 		System.out.println("\n----------------------------------");
 
-		Movie myMovie = new Movie(title, releaseDate, tomatoScore, movieID);
+		Movie myMovie = new Movie(title, releaseDate, tomatoScore, id);
 
 		return myMovie;
 
@@ -137,11 +133,13 @@ public class MovieDatabase implements java.io.Serializable{
 	public void centralDelete(){
 		Movie outMovie = moviesHeap.findLeastRatedMovie();
 
+		outMovie.setLibraryStatus(false);
 
 		moviesHash.delete(outMovie.getID());
 		moviesBST.deleteMovie(outMovie);
 
 		moviesHeap.deleteLeastRatedMovie();
+
 
 		numMovies--;
 
@@ -160,7 +158,7 @@ public class MovieDatabase implements java.io.Serializable{
 	
 
 	/*public static void main(String[] args){
-		MovieDatabase myMovies = new MovieDatabase();
+		movieDatabase myMovies = new movieDatabase();
 		myMovies.centralAdd();
 		myMovies.centralAdd();
 		myMovies.centralDelete();
