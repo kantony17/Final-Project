@@ -18,7 +18,7 @@ This file calls on MainMenu.java which depending on user input accesses the othe
 The following are the files and subsequent data strucutres used in order to run the main method NetFlix.java. All classes are serializable. 
 
 #####Customer.java
-This file is the specific customer node. It can set and retunr a customers name, credit card number and the password that they create. Each customer is created as their own node.  
+This file is the specific customer node. It can set and return a customers name, credit card number and the password that they create. Each customer is created as their own node.  
 #####Movie.java
 This file is the specific movie node. It can set and return a movies title, ID number, rotten tomato rating score and whether or not is is available. Each movie is create as its own node, which is then stored in a variety of different data structures. 
 #####WishList.java
