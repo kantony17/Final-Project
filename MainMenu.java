@@ -162,7 +162,6 @@ public class MainMenu implements java.io.Serializable{
 			Scanner a = new Scanner(System.in);
 			System.out.print("Password:  ");
 			password = a.next();
-			System.out.println("password printed: " + password); //TEST PRINT
 
 			while ((customerDatabase.passwordMatch(username, password)) != true){
 				System.out.println("Nice try... You're password is wrong. Why don't you enter a different password.");
