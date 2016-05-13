@@ -4,6 +4,7 @@
 -admins have options to acess and edit the movie database
 */
 
+//imports
 import java.util.Scanner;
 import java.io.*;
 import java.util.*;
@@ -11,11 +12,10 @@ import java.util.*;
 public class MainMenu implements java.io.Serializable{
 
 	//instance variables
-	private String passwordA = "netflixAdmin";
-	private String passwordC = "netflixCust";
+	private String passwordA = "netflixAdmin"; //hard code the admin password, but each customer will have their own
 	private int username;
 	private String password;
-	//WishList wishlist = new WishList();
+	//data structures, serialized below
 	MovieHashTable_ID moviesHash;
 	MovieTomatoScoreHeap moviesHeap;
 	MovieReleaseDateBST moviesBST;
@@ -26,17 +26,15 @@ public class MainMenu implements java.io.Serializable{
 	//constructor 
 	public MainMenu(){
 	MainMenu aa = null;
-		
-		//wishlist = new WishList();
+		//begining of serealization
 		moviesHash = new MovieHashTable_ID();
 		moviesHeap = new MovieTomatoScoreHeap();
 		moviesBST = new MovieReleaseDateBST();
-		//moviesStack = new RecentlyWatchedStack();
 		moviesDatabase = new MovieDatabase(moviesHash, moviesBST, moviesHeap);
 		customerDatabase = new CustomerDatabase();
 
-		File bigFile = new File("Data.ser");
-		if ((bigFile.exists()) && (!(bigFile.isDirectory()))){
+		File bigFile = new File("Data.ser"); //data file where information will be serialized
+		if ((bigFile.exists()) && (!(bigFile.isDirectory()))){//check to see if file already exists
 			try{
 	        	FileInputStream fileIn1 = new FileInputStream("Data.ser");
 	        	ObjectInputStream in = new ObjectInputStream(fileIn1);
@@ -63,19 +61,17 @@ public class MainMenu implements java.io.Serializable{
         /* ------------------------------------------------------- */
 
 		username = 0;
-		Boolean returningCust = false;
-		Scanner f = new Scanner(System.in);
-
-		while(true){
+		Boolean returningCust = false; //start returning customer as false, so will enter while loop
+		Scanner f = new Scanner(System.in); // scanner for main menu
+		while(true){//to keep everything running on a loop
 			try{
-
-				while ((username != 1) && (username != 2) && ((returningCust == false))){
+				while ((username != 1) && (username != 2) && ((returningCust == false))){ //while loop for
 					System.out.println("\n-----------Welcome to NetFlix!-----------\nPlease Choose an option below\n1. Admins\n2. New Customers\nReturning Customers Enter your Username");
-					System.out.print("Login: ");
-					username = f.nextInt();
-					returningCust = customerDatabase.hasCustomer(username);
-					if ((username != 1) && (username != 2) && ((returningCust == false))){
-						System.out.println("\nPlease try again, that wasn't an option!\n");
+					System.out.print("Login: "); //propt for one of the above login options 
+					username = f.nextInt();//get the user input
+					returningCust = customerDatabase.hasCustomer(username);//check to see if they are a returning customer (if true will exit while loop)
+					if ((username != 1) && (username != 2) && ((returningCust == false))){ //if none of the options
+						System.out.println("\nPlease try again, that wasn't an option!\n"); //tell them they were wrong...try again
 					}
 				}
 				break;
@@ -86,54 +82,50 @@ public class MainMenu implements java.io.Serializable{
 				continue;
 			}
 		}
-
-		if (username == 1){
-			password = "";
-			while (!(password.equals(passwordA))){
-				Scanner p = new Scanner(System.in);
+		if (username == 1){ //option for if user is an admin
+			password = "";//set the password to empty string so program will enter while loop
+			while (!(password.equals(passwordA))){ //until the user input is the same as hard coded password 
+				Scanner p = new Scanner(System.in);//scanner
 				System.out.print("Password:  ");
-				password = p.next();
-				if(!(password.equals(passwordA))){
+				password = p.next();//get user input
+				if(!(password.equals(passwordA))){ //if they arent right, prompt again (will print then stay in while loop)
 					System.out.println("\nPlease try again, that wasn't right...\n");
 				}
 			}
-			if (password.equals(passwordA)){
+			if (password.equals(passwordA)){ //after exits while loop-they are an admin
 				System.out.println("\nWelcome Admin!\n");
 				int adminInput = 0;
 				Scanner t = new Scanner(System.in);
 				while(true){
 					try{
-	
-						while (adminInput != 4){
-							
-								
+						while (adminInput != 4){ //while not quit
 								System.out.println("Please select an option from the list below (1-4) then press enter:\n1. Add a movie to the database.\n2. View least-rated movie in the database.\n3. View all movies in database(by order of release date).\n4. Pick this option to quit.\n");
 								System.out.print("Option: ");
-								adminInput = t.nextInt();
+								adminInput = t.nextInt(); //get user input
 
 								if (adminInput == 1){ //add movie to the database
 									moviesDatabase.centralAdd(); //central add makes sure it changes in all of the data structures 
 								}
 								else if (adminInput == 2){ //view least rated movie in the database
-									Movie temp = moviesHeap.findLeastRatedMovie();
-									if (temp == null){
+									Movie temp = moviesHeap.findLeastRatedMovie(); //data structure (heap) root is least rated
+									if (temp == null){ //no movies available 
 										System.out.println("\nSorry there are no movies in the database\n");
 									}
 									else{
 										System.out.println("The least rated movie is:   ");
-										System.out.println(temp.getTitle());
+										System.out.println(temp.getTitle()); //get the title from temp which holds the current least rated movie
 
 										String answer = "";
 										while (!(answer.equals("yes")) && !(answer.equals("no"))){
 											Scanner l = new Scanner(System.in); //give option to delete the least rated move
 											System.out.println("Would you like to delete this movie from the database? Yes or No. ");
-											answer = l.next().toLowerCase();
+											answer = l.next().toLowerCase(); //always put the input to lowercase to check
 											if (!(answer.equals("yes")) && !(answer.equals("no"))){
 												System.out.println("That was neither 'yes' or 'no', why dont you try again...\n");
 											}
 										}
 										if (answer.equals("yes")){
-											moviesDatabase.centralDelete();
+											moviesDatabase.centralDelete(); //delete the movie, central delete then deletes from all data structures
 										}
 										else if (answer.equals("no")){
 											System.out.println("This movie will remain in the database.\n");
@@ -147,7 +139,6 @@ public class MainMenu implements java.io.Serializable{
 							}
 							break;
 						}
-
 					catch(InputMismatchException z){
 						System.out.println("\nYou did not enter one of the choices. Choose Again\n");
 						t.next(); 
@@ -201,7 +192,7 @@ public class MainMenu implements java.io.Serializable{
 							Scanner e = new Scanner(System.in); //give them the option to delete after watching
 							System.out.println("\nWould you like to delete this movie from the wishlist after you've seen it? Yes or No");
 							String userInput5 = e.next().toLowerCase();
-							if (userInput5.equals("yes")){
+							if (userInput5.equals("yes")){ //user customer database to find the user with the given username, then delete from that wishlist
 								customerDatabase.findCustomerWishList(username).delete(customerDatabase.findCustomerWishList(username).firstMovie().getID());
 							}
 							else if (userInput5.equals("no")){
@@ -218,7 +209,7 @@ public class MainMenu implements java.io.Serializable{
 					}
 				}
 				else if (userInput9 == 2){ //print wishlist
-					customerDatabase.findCustomerWishList(username).printList();
+					customerDatabase.findCustomerWishList(username).printList(); //use cusotmer databse to find the customer then print that specific wishlist
 				}
 				else if (userInput9 == 3){ //add movie to wishlist
 					Scanner n = new Scanner(System.in);
@@ -254,6 +245,7 @@ public class MainMenu implements java.io.Serializable{
 				//7 quits the program, anything else prompts within options while loop
 			}
 		}
+		//finish serialization
 		try{
 			FileOutputStream fileOut1 = 
 			new FileOutputStream("Data.ser");
