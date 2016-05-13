@@ -1,12 +1,10 @@
-//WISHLIST CODED WITH AN ARRAY
-
 //Wish List for Customers
 
 
 import java.util.*;
 import java.io.*;
 
-public class WishListA implements java.io.Serializable{
+public class WishList implements java.io.Serializable{
 
 	//instance variables
 	private int length;
@@ -14,8 +12,10 @@ public class WishListA implements java.io.Serializable{
 	private int end;
 	private int i;
 	private Movie[] wishlist;
+	private Movie temp;
 
-	public WishListA(){
+	//constructor
+	public WishList(){
 		head = 0;
 		length = 0;
 		wishlist = new Movie[20];
@@ -28,6 +28,7 @@ public class WishListA implements java.io.Serializable{
 
 	//add new movie in any location, O(n) runtime
 	public void addNewMovie(Movie movie){
+		//wishlist can only be 20 movies long
 		if (length < 20){
 			String userInput = "";
 			while (!(userInput.equals("A") || userInput.equals("B") || userInput.equals("C"))){
@@ -38,6 +39,7 @@ public class WishListA implements java.io.Serializable{
 					System.out.println("Sorry that is not one of the options. Try again. ");
 				}
 			}
+			//insert at the front
 			if (userInput.equals("A")){ 
 				if (length == 0){
 					wishlist[0] = movie;
@@ -69,6 +71,7 @@ public class WishListA implements java.io.Serializable{
 					end = length;
 				}
 			}
+			//inserts movie at a user given input
 			else if (userInput.equals("C")){ 
 				Scanner x = new Scanner(System.in);
 				System.out.println("Enter a number 1 - " + (length + 1) + " where you'd like this movie to be played:  ");
@@ -102,12 +105,30 @@ public class WishListA implements java.io.Serializable{
 			System.out.println("Sorry, your wishlist is full.");
 		}
 	}
+	
+	//searches for a movie using the id number
+	public int search(int id){
+		for (int i = 0; i < length; i++){
+			if (wishlist[i].getID() == id){
+				return i;
+			}
+		}
+		return -1;
+	}
 
 	//deletes the movie from the list, O(n) runtime 
-	public Movie delete(int id){
-		length--;
-		wishlist[i] = wishlist[length];
-		return wishlist[i];
+	public void delete(int id){
+		int movieIndex = search(id);
+		if (movieIndex != -1){
+			length--;
+			for (int i = movieIndex; i < length; i++){
+				wishlist[i] = wishlist[i + 1];
+			}
+		}
+		else{
+			System.out.println("This movie isn't in your wishlist.");
+
+		}
 	}
 
 	//returns the first movie in the list
@@ -121,19 +142,20 @@ public class WishListA implements java.io.Serializable{
 	}
 
 	//prints the title and ID of each of the movies in the list in the order they are in the list 
-    public void printList(){
-    	if (length == 0){
-    		System.out.println("There are no movies in your wishlist.");
-    	}
-    	else{
-    		for (int i = 0; i < length; i++){
-    			if (wishlist[i] != null){
-    				System.out.println("Title:" + wishlist[i].getTitle() +",   ID: " + wishlist[i].getID());
-    			}
-    			else{
-    				System.out.println("empty");
+    	public void printList(){
+    		if (length == 0){
+    			System.out.println("There are no movies in your wishlist.");
+    		}
+    		else{
+    			for (int i = 0; i < length; i++){
+    				if (wishlist[i] != null){
+    					System.out.println(wishlist[i].getTitle());
+    				}
+    				else{
+    					System.out.println("empty");
+    				}
     			}
     		}
-    	}
-    }
+	 }
 }
+
