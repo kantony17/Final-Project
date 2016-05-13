@@ -6,7 +6,7 @@
 import java.util.*;
 import java.io.*;
 
-public class WishList implements java.io.Serializable{
+public class WishListA implements java.io.Serializable{
 
 	//instance variables
 	private int length;
@@ -15,7 +15,7 @@ public class WishList implements java.io.Serializable{
 	private int i;
 	private Movie[] wishlist;
 
-	public WishList(){
+	public WishListA(){
 		head = 0;
 		length = 0;
 		wishlist = new Movie[20];
@@ -128,7 +128,7 @@ public class WishList implements java.io.Serializable{
     	else{
     		for (int i = 0; i < length; i++){
     			if (wishlist[i] != null){
-    				System.out.println(wishlist[i].getTitle());
+    				System.out.println("Title:" + wishlist[i].getTitle() +",   ID: " + wishlist[i].getID());
     			}
     			else{
     				System.out.println("empty");
